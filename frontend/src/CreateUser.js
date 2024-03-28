@@ -34,7 +34,6 @@ function CreateUser() {
       });
 
       console.log(response);
-      
       const data = await response.json();
 
       if (data.success) {

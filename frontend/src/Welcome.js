@@ -47,6 +47,10 @@ function Welcome() {
     }
   };
 
+  const onChangePasswordClicked = () => {
+    
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -76,6 +80,11 @@ function Welcome() {
           </div>
           <button type="submit">Login</button>
         </form>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          onChangePasswordClicked();
+        }}>Change Password</button>
         <p>{message}</p>
         {/* <Link to="/home">
           <button>Go to Home</button>

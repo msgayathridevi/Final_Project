@@ -15,7 +15,19 @@ exports.createAdminUser = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const user = new User(req.body);
+    const {
+      name,
+      email,
+      password,
+      role,
+      age
+    } = req.body;
+
+    const hash = crypto.createHash('sha256');
+    hash.update(password);
+    const password_hash = hash.digest('hex');
+  
+    const user = new User({name, email: email.toLowerCase(), password: password_hash, role, age});
     console.log(user)
     await user.save();
     res.status(201).json({ message: 'User created successfully', user });
@@ -25,14 +37,14 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.loginUser = async (req,res) => {
-  try {
-    const user = User.findOne (req.body);
+// exports.loginUser = async (req, res) => {
+//   try {
+//     const user = User.findOne(req.body);
 
-  } catch (error) {
-    
-  }
-}
+//   } catch (error) {
+
+//   }
+// }
 
 exports.authenticateUser = async (req, res) => {
   const { email, password } = req.body;
@@ -41,7 +53,7 @@ exports.authenticateUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid email or password' });
+      return res.status(401).json({ success: false, message: 'Invalid email' });
     }
 
     // Hash the provided password using SHA-256
@@ -49,7 +61,7 @@ exports.authenticateUser = async (req, res) => {
 
     // Compare hashed passwords
     if (hashedPassword !== user.password) {
-      return res.status(401).json({ success: false, message: 'Invalid email or password' });
+      return res.status(401).json({ success: false, message: 'Invalid password' });
     }
 
     // Authentication successful
