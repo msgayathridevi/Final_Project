@@ -7,6 +7,8 @@ router.get('/sendmail', async (req, res) => {
     const requestingEmail = req.query.requestingEmail;
     console.log(requestingEmail);
 
+    const link = `Update Password here: http://localhost:3000/changepassword?emailID=${requestingEmail}`
+
     try {
 
         // Create a transporter using SMTP transport
@@ -22,8 +24,8 @@ router.get('/sendmail', async (req, res) => {
         const mailOptions = {
             from: 'msg3dv@gmail.com', // Sender address
             to: requestingEmail, // List of recipients
-            subject: 'Test Email', // Subject line
-            text: 'This is a test email sent using Node.js and nodemailer.', // Plain text body
+            subject: 'Update Password', // Subject line
+            text: link, // Plain text body
         };
 
         // Send email
