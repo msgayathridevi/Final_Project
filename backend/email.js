@@ -5,26 +5,35 @@ const router = express.Router();
 // http://localhost:5000/sendmail?requestingEmail=gaya@gmail.com
 router.get('/sendmail', async (req, res) => {
     const requestingEmail = req.query.requestingEmail;
+    console.log(requestingEmail);
 
-    // Create a transporter using SMTP transport
-    const transporter = nodemailer.createTransport({
-        service: 'Gmail', // Use the appropriate email service provider
-        auth: {
-            user: 'msg3dv@gmail.com', // Your email address
-            pass: 'dvkk ghly lwje ueyb' // Your password or application-specific password
-        }
-    });
+    try {
 
-    // Define email options
-    const mailOptions = {
-        from: 'msg3dv@gmail.com', // Sender address
-        to: requestingEmail, // List of recipients
-        subject: 'Test Email', // Subject line
-        text: 'This is a test email sent using Node.js and nodemailer.', // Plain text body
-    };
+        // Create a transporter using SMTP transport
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail', // Use the appropriate email service provider
+            auth: {
+                user: 'msg3dv@gmail.com', // Your email address
+                pass: 'dvkk ghly lwje ueyb' // Your password or application-specific password
+            }
+        });
 
-    // Send email
-    await transporter.sendMail(mailOptions);
+        // Define email options
+        const mailOptions = {
+            from: 'msg3dv@gmail.com', // Sender address
+            to: requestingEmail, // List of recipients
+            subject: 'Test Email', // Subject line
+            text: 'This is a test email sent using Node.js and nodemailer.', // Plain text body
+        };
+
+        // Send email
+        await transporter.sendMail(mailOptions);
+
+        return res.status(200).send('Email Sent!')
+    }
+    catch (err) {
+        return res.status(500).send('Internal Error');
+    }
 })
 
 module.exports = router;

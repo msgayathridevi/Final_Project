@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Welcome() {
   const navigate = useNavigate();
@@ -48,7 +49,17 @@ function Welcome() {
   };
 
   const onChangePasswordClicked = () => {
-    
+    console.log(credentials.email);
+    axios.get('http://localhost:5000/sendmail', {params: {requestingEmail: credentials.email}})
+    .then(res => {
+      if(res.status === 200) {
+        alert('Mail Sent!');
+      } else {
+        console.log(res.data);
+      }
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   return (
