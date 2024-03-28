@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Welcome() {
+
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -21,19 +23,22 @@ function Welcome() {
 
     try {
       // Send credentials to backend for validation (using fetch or an HTTP library)
-      const response = await fetch('/api/login', {
+      const response = await fetch('http://localhost:5000/user/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
       });
-
+      console.log(response) 
+      
       const data = await response.json();
 
       if (data.success) {
         setMessage('Login successful!');
         // Handle successful login (e.g., store user data, redirect to home)
+        navigate("/home")
+        
       } else {
         setMessage(data.message);
       }

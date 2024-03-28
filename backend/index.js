@@ -1,8 +1,23 @@
 require('dotenv').config(); // Load environment variables from .env file
 
+console.log("hello");
+const userRouter = require('./routes/user.js')
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan')
+const cors = require('cors');
 const app = express();
+app.use(cors()); 
+app.use((req, res, next) => {
+  console.log("Cors passed");
+  next();
+});
+app.use(morgan('tiny'));
+app.use(express.json())
+app.use('/user', userRouter);
+
+
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -16,10 +31,11 @@ const exampleSchema = new Schema({
   email: String,
   password: String,
   role: { type: String, enum: ['admin', 'user'] },
-  id: String, // Assuming id is a string
   age: Number
 });
 const ExampleModel = mongoose.model('Example', exampleSchema);
+
+
 
 // Example route to fetch data
 app.get('/data', async (req, res) => {

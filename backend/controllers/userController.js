@@ -6,7 +6,7 @@ const ExampleModel = require('../models/user'); // Import your Mongoose model
 const addUser = async (req, res) => {
   try {
     // Extract user data from request body
-    const { name, email, password, role, id, age } = req.body;
+    const { name, email, password, role, age } = req.body;
 
     // Create a new instance of ExampleModel
     const newUser = new ExampleModel({
@@ -14,7 +14,6 @@ const addUser = async (req, res) => {
       email,
       password,
       role,
-      id,
       age
     });
 
@@ -29,6 +28,8 @@ const addUser = async (req, res) => {
     res.status(500).json({ message: 'Failed to add user', error: error.message });
   }
 };
+
+
 
 module.exports = {
   addUser
