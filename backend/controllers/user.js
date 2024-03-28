@@ -2,11 +2,21 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto')
 
-
+exports.createAdminUser = async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).json({ message: 'Admin User created successfully', user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
 
 exports.createUser = async (req, res) => {
   try {
     const user = new User(req.body);
+    console.log(user)
     await user.save();
     res.status(201).json({ message: 'User created successfully', user });
   } catch (err) {
@@ -23,19 +33,6 @@ exports.loginUser = async (req,res) => {
     
   }
 }
-
-exports.getUserById = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    res.json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server Error' });
-  }
-};
 
 exports.authenticateUser = async (req, res) => {
   const { email, password } = req.body;

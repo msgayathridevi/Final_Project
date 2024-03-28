@@ -6,7 +6,7 @@ function Home() {
     <div className="App">
       <header className="App-header">
         <h1> Admin Login Page</h1>
-        <Link to="/create">
+        <Link to="/createuser">
           <button>Create User</button>
         </Link>
       </header>

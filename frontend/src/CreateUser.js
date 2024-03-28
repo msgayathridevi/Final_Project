@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Welcome() {
+function CreateUser() {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
+    name: '', // New field
     email: '',
     password: '',
+    role: '', // New field
+    age: '', // New field
   });
   const [message, setMessage] = useState('');
 
@@ -22,28 +25,29 @@ function Welcome() {
 
     try {
       // Send credentials to backend for validation (using fetch or an HTTP library)
-      const response = await fetch('http://localhost:5000/user/login', {
+      const response = await fetch('http://localhost:5000/user/api/createuser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
       });
-      console.log(response) 
+
+      console.log(response);
       
       const data = await response.json();
 
       if (data.success) {
-        setMessage('Login successful!');
+        setMessage('User created successful!');
         // Handle successful login (e.g., store user data, redirect to home)
-        navigate("/home")
-        
+        navigate("/home");
       } else {
         setMessage(data.message);
       }
     } catch (error) {
+      console.log(credentials)
       console.error('Error:', error);
-      setMessage('An error occurred during login');
+      setMessage('An error occurred during user creation');
     }
   };
 
@@ -52,6 +56,17 @@ function Welcome() {
       <header className="App-header">
         <h1>Welcome</h1>
         <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-group">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={credentials.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
@@ -74,15 +89,34 @@ function Welcome() {
               required
             />
           </div>
-          <button type="submit">Login</button>
+          <div className="form-group">
+            <label htmlFor="role">Role:</label>
+            <input
+              type="text"
+              id="role"
+              name="role"
+              value={credentials.role}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="age">Age:</label>
+            <input
+              type="text"
+              id="age"
+              name="age"
+              value={credentials.age}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit">Create User</button>
         </form>
         <p>{message}</p>
-        {/* <Link to="/home">
-          <button>Go to Home</button>
-        </Link> */}
       </header>
     </div>
   );
 }
 
-export default Welcome;
+export default CreateUser;
