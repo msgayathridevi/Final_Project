@@ -19,20 +19,34 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch(err => console.error('MongoDB Connection Error:', err));
 
 // Define data to be seeded
+// const userData = [
+//   {
+//     name: 'John Doe',
+//     email: 'd@d.com',
+//     password: 'admin',
+//     role: 'admin',
+//     age: 30,
+//     phoneNumber: '6381969165',
+//     designation: 'Software Engineer',
+//     department: 'Developer'
+//   },
+//   // You can add more seed data here if needed
+// ];
+
+
 const userData = [
   {
-    name: 'John Doe',
-    email: 'd@d.com',
-    password: 'admin',
-    role: 'admin',
-    age: 30,
-    phoneNumber: '6381969165',
-    designation: 'Software Engineer',
+    name: 'Gayathri',
+    email: 'u@u.com',
+    password: 'user',
+    role: 'user',
+    age: 22,
+    phoneNumber: '9986452105',
+    designation: 'Sr. Software Engineer',
     department: 'Developer'
   },
   // You can add more seed data here if needed
 ];
-
 // Hash a password using SHA-256
 function hashPassword(password) {
   const hash = crypto.createHash('sha256');
