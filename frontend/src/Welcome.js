@@ -9,6 +9,7 @@ function Welcome() {
     password: '',
   });
   const [message, setMessage] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false); // State variable to track admin status
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,16 +31,15 @@ function Welcome() {
         },
         body: JSON.stringify(credentials),
       });
-      console.log(response) 
-      
+
       const data = await response.json();
 
-      if (data.success) {
+      if (data.success && data.data.role === 'admin') {
+        setIsAdmin(true); // Set isAdmin to true if the user is an admin
         setMessage('Login successful!');
-        // Handle successful login (e.g., store user data, redirect to home)
-        navigate("/home")
-        
+        navigate("/home");
       } else {
+        setIsAdmin(false); // Set isAdmin to false if the user is not an admin
         setMessage(data.message);
       }
     } catch (error) {
@@ -49,18 +49,17 @@ function Welcome() {
   };
 
   const onChangePasswordClicked = () => {
-    console.log(credentials.email);
-    axios.get('http://localhost:5000/sendmail', {params: {requestingEmail: credentials.email}})
-    .then(res => {
-      if(res.status === 200) {
-        alert('Mail Sent!');
-      } else {
-        console.log(res.data);
-      }
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    axios.get('http://localhost:5000/sendmail', { params: { requestingEmail: credentials.email } })
+      .then(res => {
+        if (res.status === 200) {
+          alert('Mail Sent!');
+        } else {
+          console.log(res.data);
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="App">
@@ -97,9 +96,14 @@ function Welcome() {
           onChangePasswordClicked();
         }}>Change Password</button>
         <p>{message}</p>
-        {/* <Link to="/home">
-          <button>Go to Home</button>
-        </Link> */}
+
+        {/* Conditionally render based on isAdmin */}
+        {isAdmin ? (
+          <button onClick={() => navigate("/createuser")}>Create User</button>
+        ) : (
+          <h1>Only admin</h1>
+        )}
+
       </header>
     </div>
   );

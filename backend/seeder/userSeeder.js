@@ -1,13 +1,13 @@
 // Import necessary modules
 const mongoose = require('mongoose');
 const crypto = require('crypto'); // Import the crypto module for hashing
-const ExampleModel = require('../models/user'); // Import your Mongoose model
+const userModel = require('../models/userSchema'); // Import your Mongoose model
 
 // Load environment variables from .env file
 require('dotenv').config();
 
 // MongoDB Atlas connection URI
-const mongoURI = process.env.MONGODB_URI;
+const mongoURI = process.env.MONGODB_URI + process.env.MONGO_DB_AUTHO;
 
 // Connect to MongoDB Atlas
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -20,7 +20,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Define data to be seeded
 const userData = [
-  { name: 'Gayathri_hashed', email: 'abcd@bcd.com', password: 'pwd1234', role: 'admin', age: 22 },
+  { name: 'Gayathri', email: 'abcd@g.com', password: 'admin', role: 'admin', age: 22 },
   // You can add more seed data here if needed
 ];
 
@@ -41,7 +41,7 @@ async function seed() {
     }));
 
     // Insert seed data into the database
-    await ExampleModel.insertMany(seededData);
+    await userModel.insertMany(seededData);
     console.log('Data seeding complete');
   } catch (error) {
     console.error('Error seeding data:', error);

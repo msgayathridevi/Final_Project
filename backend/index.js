@@ -1,10 +1,8 @@
 require('dotenv').config(); // Load environment variables from .env file
 
 console.log("hello");
-// const userRouter = require('./routes/user.js');
-// const adminuser = require('./models/user');
 const emailRoute = require('./email')
-const user = require('./routes/user');
+const user = require('./routes/route');
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan')

@@ -1,0 +1,28 @@
+"Project Problem Statement: Skill Matrix System
+
+Overview:
+This project aims to create a simple Skill Matrix System to manage employee skills, certifications, and project experience. It includes features like a login page, user creation, tech stack details input, and email notifications for updates.
+
+Key Features:
+
+Login Page:
+Develop a secure login page for users to access the Skill Matrix System.
+
+User Creation:
+Allow administrators to create user profiles with basic information like name, role, and contact details.
+
+Tech Stack Details:
+Enable users to input their skills, certifications, and project experience, including proficiency levels.
+
+Approver Assignment:
+Assign an approver to evaluate and approve users' certifications and project experience.
+
+Email Notifications:
+Set up automated email notifications to notify users and approvers about pending evaluations and updates.
+
+Dashboard View:
+Provide a dashboard for users and administrators to view skill profiles, certification statuses, and project experience."
+
+
+
+

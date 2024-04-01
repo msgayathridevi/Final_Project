@@ -1,52 +1,31 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import axios from 'axios';
 
 function CreateUser() {
-  const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({
-    name: '', // New field
-    email: '',
-    password: '',
-    role: '', // New field
-    age: '', // New field
-  });
-  const [message, setMessage] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials({
-      ...credentials,
-      [name]: value,
-    });
-  };
+  const [name,setName] = useState("");
+  const [email,setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+  const [age, setAge] = useState("");
+
+  const navigate = useNavigate(); // Define the navigate function using useNavigate hook
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      // Send credentials to backend for validation (using fetch or an HTTP library)
-      const response = await fetch('http://localhost:5000/user/api/createuser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      console.log(response);
-      const data = await response.json();
-
-      if (data.success) {
-        setMessage('User created successful!');
-        // Handle successful login (e.g., store user data, redirect to home)
-        navigate("/home");
+      const response = await axios.post('http://localhost:5000/user/api/createuser',
+      {name, email, password, role, age});
+      
+      if (response.status === 200){
+        alert('User created successfully');
+        navigate("/home"); // Use the navigate function here
       } else {
-        setMessage(data.message);
+        alert('User creation failed');
       }
-    } catch (error) {
-      console.log(credentials)
-      console.error('Error:', error);
-      setMessage('An error occurred during user creation');
+    } catch (error){
+      console.error("Error : ", error);
     }
   };
 
@@ -61,8 +40,7 @@ function CreateUser() {
               type="text"
               id="name"
               name="name"
-              value={credentials.name}
-              onChange={handleChange}
+              onChange={e=>setName(e.target.value)}
               required
             />
           </div>
@@ -72,8 +50,7 @@ function CreateUser() {
               type="email"
               id="email"
               name="email"
-              value={credentials.email}
-              onChange={handleChange}
+              onChange={e=>setEmail(e.target.value)}
               required
             />
           </div>
@@ -83,8 +60,7 @@ function CreateUser() {
               type="password"
               id="password"
               name="password"
-              value={credentials.password}
-              onChange={handleChange}
+              onChange={e=>setPassword(e.target.value)}
               required
             />
           </div>
@@ -94,8 +70,7 @@ function CreateUser() {
               type="text"
               id="role"
               name="role"
-              value={credentials.role}
-              onChange={handleChange}
+              onChange={e=>setRole(e.target.value)}
               required
             />
           </div>
@@ -105,14 +80,12 @@ function CreateUser() {
               type="text"
               id="age"
               name="age"
-              value={credentials.age}
-              onChange={handleChange}
+              onChange={e=>setAge(e.target.value)}
               required
             />
           </div>
           <button type="submit">Create User</button>
         </form>
-        <p>{message}</p>
       </header>
     </div>
   );

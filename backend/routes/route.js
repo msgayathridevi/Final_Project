@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const UserController = require('../controllers/user');
+const UserController = require('../controllers/userController');
 
-const User = require('../models/user');
+const User = require('../models/userSchema');
 const crypto = require('crypto');
 
 router.post('/users', UserController.createAdminUser);
