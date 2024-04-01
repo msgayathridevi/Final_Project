@@ -1,37 +1,30 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
-const User = require('../models/userSchema');
+const User = require('../models/employeeSchema');
 const SkillModel = require('../models/skillSchema');
 const CertificationModel = require('../models/CertificationSchema');
 const ProjectModel = require('../models/ProjectSchema');
 
-exports.createAdminUser = async (req, res) => {
-  try {
-    const user = new User(req.body);
-    await user.save();
-    res.status(201).json({ message: 'Admin User created successfully', user });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server Error' });
-  }
-};
-
-exports.createUser = async (req, res) => {
+exports.createEmployee = async (req, res) => {
   try {
     const {
       name,
       email,
       password,
       role,
-      age
+      age,
+      phoneNumber,
+      designation,
+      department
     } = req.body;
 
     const hash = crypto.createHash('sha256');
     hash.update(password);
     const password_hash = hash.digest('hex');
-  
-    const user = new User({name, email: email.toLowerCase(), password: password_hash, role, age});
+    console.log(password_hash);
+
+    const user = new User({name, email: email.toLowerCase(), password: password_hash, role, age, phoneNumber, designation, department});
     console.log(user)
     await user.save();
     res.status(201).json({ message: 'User created successfully', user });
