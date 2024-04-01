@@ -51,7 +51,6 @@ exports.authenticateUser = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid email' });
     }
@@ -66,7 +65,7 @@ exports.authenticateUser = async (req, res) => {
 
     // Authentication successful
     // Optionally, you can set a session or generate a token here
-    return res.status(200).json({ success: true, data: user, message: 'Login successful!', redirectTo: '/home' });
+    return res.status(201).json({ success: true, data: user, message: 'Login successful!' });
   } catch (error) {
     console.error('Error authenticating user:', error);
     return res.status(500).json({ success: false, message: 'An error occurred during login' });

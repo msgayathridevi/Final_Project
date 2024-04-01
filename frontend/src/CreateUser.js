@@ -17,8 +17,9 @@ function CreateUser() {
     try {
       const response = await axios.post('http://localhost:5000/user/api/createuser',
       {name, email, password, role, age});
-      
-      if (response.status === 200){
+      console.log(response.status);
+
+      if (response.status === 201){
         alert('User created successfully');
         navigate("/home"); // Use the navigate function here
       } else {

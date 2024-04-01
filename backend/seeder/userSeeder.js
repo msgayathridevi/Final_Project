@@ -20,7 +20,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Define data to be seeded
 const userData = [
-  { name: 'Gayathri', email: 'abcd@g.com', password: 'admin', role: 'admin', age: 22 },
+  { name: 'deepthi', email: 'd@d.com', password: 'admin', role: 'admin', age: 22 },
   // You can add more seed data here if needed
 ];
 

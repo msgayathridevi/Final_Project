@@ -1,6 +1,7 @@
 // Import necessary modules
 const mongoose = require('mongoose');
-const EmployeeModel = require('../models/employeeSchema'); // Import your Mongoose model
+const crypto = require('crypto'); // Import the crypto module for hashing
+const CertificationModel = require('../models/certificationSchema'); // Import your Mongoose model
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -18,13 +19,15 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch(err => console.error('MongoDB Connection Error:', err));
 
 // Define data to be seeded
-const employeeData = [
+const certificationData = [
   {
-    employeeID: '123456',
-    name: 'John Doe',
-    role: 'user',
-    designation: 'Software Engineer',
-    department: 'Developer'
+    certificationID: '12345',
+    driveLink: 'https://example.com/certification',
+    organization: 'Example Organization',
+    expireDate: new Date('2025-12-31'),
+    issueDate: new Date('2020-01-01'),
+    durationInWeeks: 12,
+    skills: 'cloud'
   },
   // You can add more seed data here if needed
 ];
@@ -33,7 +36,7 @@ const employeeData = [
 async function seed() {
   try {
     // Insert seed data into the database
-    await EmployeeModel.insertMany(employeeData);
+    await CertificationModel.insertMany(certificationData);
     console.log('Data seeding complete');
   } catch (error) {
     console.error('Error seeding data:', error);

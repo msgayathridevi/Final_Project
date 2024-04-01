@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
 
 const employeeSchema = new mongoose.Schema({
+  employeeID: String,
   name: String,
   role: { type: String, enum: ['admin', 'user'] },
   designation: { type: String, enum: ['Software Engineer', 'Sr. Software Engineer', 'Solution Enabler', 'Consultant'] },
-  skills: { type: String, enum: ['python', 'Advanced python', 'cloud', 'dbt', 'Full Stack', 'powerBI', 'tableau', 'Redux', 'JWT'] },
-  certifications: String,
-  project_experience: Number,
-  project_description : String
+  department: { type: String, enum: ['Developer', 'Quality Analyst', 'HR', 'Financial Team', 'Management'] }
 });
 
 const EmployeeModel = mongoose.model('Employee', employeeSchema);
