@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const User = require('../models/userSchema');
 const SkillModel = require('../models/skillSchema');
 const CertificationModel = require('../models/CertificationSchema');
+const ProjectModel = require('../models/ProjectSchema');
 
 exports.createAdminUser = async (req, res) => {
   try {
@@ -120,6 +121,35 @@ exports.editCertification = async (req, res) => {
     return res.status(200).json({ message: 'Certification updated successfully' });
   } catch (error) {
     console.error('Error updating certification:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.editProject = async (req, res) => {
+  try {
+    const { email, projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client } = req.body;
+
+    // Check if the project exists
+    const existingProject = await ProjectModel.findOne({ email });
+    if (!existingProject) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    // Update the project with the new data
+    existingProject.projectName = projectName;
+    existingProject.years = years;
+    existingProject.startDate = startDate;
+    existingProject.endDate = endDate;
+    existingProject.projectDescription = projectDescription;
+    existingProject.skillsGained = skillsGained;
+    existingProject.mentor = mentor;
+    existingProject.client = client;
+
+    // Save the updated project in the database
+    await existingProject.save();
+    return res.status(200).json({ message: 'Project updated successfully' });
+  } catch (error) {
+    console.error('Error updating project:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

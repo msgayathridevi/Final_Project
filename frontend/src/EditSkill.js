@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 // import { useParams } from 'react-router-dom';
 
 const EditSkill = () => {
@@ -46,26 +46,42 @@ const EditSkill = () => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="skillMode">Skill Mode:</label>
-                        <input
-                            type="text"
+                        <select
                             id="skillMode"
                             name="skillMode"
                             value={skillMode}
                             onChange={(e) => setSkillMode(e.target.value)}
                             required
-                        />
+                        >
+                            <option value="">Select Skill Mode</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="personalProjects">Personal Projects</option>
+                            <option value="previouslyGained">Previously Gained</option>
+                            <option value="collaborativeLearning">Collaborative Learning</option>
+                        </select>
                     </div>
                     <div className="form-group">
                         <label htmlFor="skills">Skills:</label>
-                        <input
-                            type="text"
+                        <select
                             id="skills"
                             name="skills"
                             value={skills}
                             onChange={(e) => setSkills(e.target.value)}
                             required
-                        />
+                        >
+                            <option value="">Select Skill</option>
+                            <option value="python">Python</option>
+                            <option value="Advanced python">Advanced Python</option>
+                            <option value="cloud">Cloud</option>
+                            <option value="dbt">DBT</option>
+                            <option value="Full Stack">Full Stack</option>
+                            <option value="powerBI">PowerBI</option>
+                            <option value="tableau">Tableau</option>
+                            <option value="Redux">Redux</option>
+                            <option value="JWT">JWT</option>
+                        </select>
                     </div>
+
                     <div className="form-group">
                         <label htmlFor="rateYourself">Rate Yourself (1-5):</label>
                         <input

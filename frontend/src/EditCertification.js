@@ -108,15 +108,28 @@ const EditCertification = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="skills">Skills:</label>
-                        <input
-                            type="text"
-                            id="skills"
-                            name="skills"
-                            value={skills}
-                            onChange={(e) => setSkills(e.target.value)}
-                            required
-                        />
+                        <div className="form-group">
+                            <label htmlFor="skills">Skills:</label>
+                            <select
+                                id="skills"
+                                name="skills"
+                                value={skills}
+                                onChange={(e) => setSkills(e.target.value)}
+                                required
+                            >
+                                <option value="">Select Skill</option>
+                                <option value="python">Python</option>
+                                <option value="Advanced python">Advanced Python</option>
+                                <option value="cloud">Cloud</option>
+                                <option value="dbt">DBT</option>
+                                <option value="Full Stack">Full Stack</option>
+                                <option value="powerBI">PowerBI</option>
+                                <option value="tableau">Tableau</option>
+                                <option value="Redux">Redux</option>
+                                <option value="JWT">JWT</option>
+                            </select>
+                        </div>
+
                     </div>
                     <button type="submit">Update Certification</button>
                 </form>
