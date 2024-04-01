@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<EditSkill />} />
+        <Route path="/" element={<EditCertification />} />
         {/* <Route path="/" element={<Welcome />} /> */}
         <Route path="/home" element={<Home />} />
         <Route path="/createuser" element={<CreateUser />} />

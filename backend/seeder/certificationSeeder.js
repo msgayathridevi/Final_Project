@@ -21,6 +21,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // Define data to be seeded
 const certificationData = [
   {
+    email: 'd@d.com',
     certificationID: '12345',
     driveLink: 'https://example.com/certification',
     organization: 'Example Organization',

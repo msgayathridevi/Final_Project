@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 // import { useParams } from 'react-router-dom';
 
 const EditSkill = () => {
@@ -10,25 +10,10 @@ const EditSkill = () => {
     const [rateYourself, setRateYourself] = useState(0);
     const [driveLink, setDriveLink] = useState('');
 
-    useEffect(() => {
-        // Fetch skill data from the backend when the component mounts
-        axios.get(`http://localhost:5000/editSkill`)
-            .then((res) => {
-                const { skillMode, skills, rateYourself, driveLink } = res.data;
-                setSkillMode(skillMode);
-                setSkills(skills);
-                setRateYourself(rateYourself);
-                setDriveLink(driveLink);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    });
-
     const onFormSubmit = () => {
         // Send updated skill data to the backend
         const updatedSkill = { email, skillMode, skills, rateYourself, driveLink };
-        axios.put(`http://localhost:5000/editSkill`, updatedSkill)
+        axios.post(`http://localhost:5000/editSkill`, updatedSkill)
             .then((res) => {
                 if (res.status === 200) {
                     alert('Skill updated successfully');

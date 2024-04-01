@@ -3,34 +3,7 @@ const crypto = require('crypto');
 
 const User = require('../models/userSchema');
 const SkillModel = require('../models/skillSchema');
-
-// Controller function to handle editing a skill
-exports.editSkill = async (req, res) => {
-    try {
-        const { email, skillMode, skills, rateYourself, driveLink } = req.body;
-
-        // Check if the skill exists
-        const existingSkill = await SkillModel.findOne({ email: email });
-        if (!existingSkill) {
-            return res.status(404).json({ message: 'Skill not found' });
-        }
-
-        // Update the skill with the new data
-        existingSkill.skillMode = skillMode;
-        existingSkill.skills = skills;
-        existingSkill.rateYourself = rateYourself;
-        existingSkill.driveLink = driveLink;
-
-        // Save the updated skill in the database
-        const updatedSkill = await existingSkill.save();
-        res.status(200).json({ message: 'Skill updated successfully', updatedSkill });
-    } catch (error) {
-        console.error('Error updating skill:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-};
-
-// module.exports = { editSkill };
+const CertificationModel = require('../models/CertificationSchema');
 
 exports.createAdminUser = async (req, res) => {
   try {
@@ -67,15 +40,6 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// exports.loginUser = async (req, res) => {
-//   try {
-//     const user = User.findOne(req.body);
-
-//   } catch (error) {
-
-//   }
-// }
-
 exports.authenticateUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -102,9 +66,60 @@ exports.authenticateUser = async (req, res) => {
   }
 };
 
-// Hash a password using SHA-256
 function hashPassword(password) {
   const hash = crypto.createHash('sha256');
   hash.update(password);
   return hash.digest('hex');
 }
+
+exports.editSkill = async (req, res) => {
+  try {
+      const { email, skillMode, skills, rateYourself, driveLink } = req.body;
+
+      // Check if the skill exists
+      const existingSkill = await SkillModel.findOne({ email });
+      if (!existingSkill) {
+          return res.status(404).json({ message: 'Skill not found' });
+      }
+
+      // Update the skill with the new data
+      existingSkill.skillMode = skillMode;
+      existingSkill.skills = skills;
+      existingSkill.rateYourself = rateYourself;
+      existingSkill.driveLink = driveLink;
+
+      // Save the updated skill in the database
+      await existingSkill.save();
+      return res.status(200).json({ message: 'Skill updated successfully' });
+  } catch (error) {
+      console.error('Error updating skill:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.editCertification = async (req, res) => {
+  try {
+    const { email, driveLink, organization, expireDate, issueDate, durationInWeeks, skills } = req.body;
+
+    // Check if the certification exists
+    const existingCertification = await CertificationModel.findOne({ email });
+    if (!existingCertification) {
+      return res.status(404).json({ message: 'Certification not found' });
+    }
+
+    // Update the certification with the new data
+    existingCertification.driveLink = driveLink;
+    existingCertification.organization = organization;
+    existingCertification.expireDate = expireDate;
+    existingCertification.issueDate = issueDate;
+    existingCertification.durationInWeeks = durationInWeeks;
+    existingCertification.skills = skills;
+
+    // Save the updated certification in the database
+    await existingCertification.save();
+    return res.status(200).json({ message: 'Certification updated successfully' });
+  } catch (error) {
+    console.error('Error updating certification:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

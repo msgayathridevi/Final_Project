@@ -9,6 +9,7 @@ router.post('/users', UserController.createAdminUser);
 router.post('/login', UserController.authenticateUser);
 router.post('/api/createuser', UserController.createUser);
 router.post('/editSkill', UserController.editSkill);
+router.post('/editCertification', UserController.editCertification);
 
 router.post('/updatepassword', async (req, res) => {
     try {
