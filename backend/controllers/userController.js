@@ -1,6 +1,36 @@
-const User = require('../models/userSchema');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+
+const User = require('../models/userSchema');
+const SkillModel = require('../models/skillSchema');
+
+// Controller function to handle editing a skill
+exports.editSkill = async (req, res) => {
+    try {
+        const { email, skillMode, skills, rateYourself, driveLink } = req.body;
+
+        // Check if the skill exists
+        const existingSkill = await SkillModel.findOne({ email: email });
+        if (!existingSkill) {
+            return res.status(404).json({ message: 'Skill not found' });
+        }
+
+        // Update the skill with the new data
+        existingSkill.skillMode = skillMode;
+        existingSkill.skills = skills;
+        existingSkill.rateYourself = rateYourself;
+        existingSkill.driveLink = driveLink;
+
+        // Save the updated skill in the database
+        const updatedSkill = await existingSkill.save();
+        res.status(200).json({ message: 'Skill updated successfully', updatedSkill });
+    } catch (error) {
+        console.error('Error updating skill:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+// module.exports = { editSkill };
 
 exports.createAdminUser = async (req, res) => {
   try {

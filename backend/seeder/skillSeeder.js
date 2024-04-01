@@ -20,7 +20,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // Define data to be seeded
 const skillData = [
   {
-    skillID: '123',
+    email: 'd@d.com',
+    // skillID: '123',
     skillMode: 'youtube',
     skills: 'python',
     rateYourself: 4,

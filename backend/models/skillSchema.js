@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const skillSchema = new mongoose.Schema({
-  skillID: String,
+  email: String,
+//   skillID: String,
   skillMode: { type: String, enum: ['youtube', 'personalProjects', 'previouslyGained', 'collaborativeLearning'] },
   skills: { type: String, enum: ['python', 'Advanced python', 'cloud', 'dbt', 'Full Stack', 'powerBI', 'tableau', 'Redux', 'JWT'] },
   rateYourself: { type: Number, min: 1, max: 5 },
