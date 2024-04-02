@@ -6,8 +6,8 @@ const UserController = require('../controllers/userController');
 // const crypto = require('crypto');
 
 // router.post('/users', UserController.createAdminUser);
-router.post('/createemployee', UserController.createEmployee);
 router.post('/login', UserController.authenticateUser);
+router.post('/createemployee', UserController.createEmployee);
 router.post('/updatepassword', UserController.updatePassword);
 
 router.post('/editSkill/:userId', UserController.editSkill);
