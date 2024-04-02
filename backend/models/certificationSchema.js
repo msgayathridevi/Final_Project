@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const certificationSchema = new mongoose.Schema({
   email: String,
+  userId: String,
   certificationID: String,
   driveLink: String,
   organization: String,

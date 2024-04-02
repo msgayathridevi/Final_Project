@@ -40,7 +40,9 @@ exports.createEmployee = async (req, res) => {
 };
 
 exports.authenticateUser = async (req, res) => {
+  console.log("req-------",req.body)
   const { email, password } = req.body;
+  console.log(email, password)
 
   try {
     const user = await User.findOne({ email });
@@ -97,28 +99,40 @@ exports.updatePassword = async (req, res) => {
 
 exports.editSkill = async (req, res) => {
   try {
-      const { email, skillMode, skills, rateYourself, driveLink } = req.body;
+    const { email, skillMode, skills, rateYourself, driveLink } = req.body;
+    const userId = req.params.userId;
 
-      // Check if the skill exists
-      const existingSkill = await SkillModel.findOne({ email });
-      if (!existingSkill) {
-          return res.status(404).json({ message: 'Skill not found' });
-      }
+    // Check if the skill exists
+    let existingSkill = await SkillModel.findOne({ userId });
 
-      // Update the skill with the new data
+    if (!existingSkill) {
+      // If skill does not exist, create a new one
+      existingSkill = new SkillModel({
+        email,
+        userId,
+        skillMode,
+        skills,
+        rateYourself,
+        driveLink
+      });
+    } else {
+      // If skill exists, update it with the new data
       existingSkill.skillMode = skillMode;
       existingSkill.skills = skills;
       existingSkill.rateYourself = rateYourself;
       existingSkill.driveLink = driveLink;
+    }
 
-      // Save the updated skill in the database
-      await existingSkill.save();
-      return res.status(200).json({ message: 'Skill updated successfully' });
+    // Save the skill to the database
+    await existingSkill.save();
+    
+    return res.status(200).json({ message: 'Skill updated successfully' });
   } catch (error) {
-      console.error('Error updating skill:', error);
-      res.status(500).json({ message: 'Internal server error' });
+    console.error('Error updating skill:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 exports.editCertification = async (req, res) => {
   try {

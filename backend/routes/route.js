@@ -10,7 +10,7 @@ router.post('/createemployee', UserController.createEmployee);
 router.post('/login', UserController.authenticateUser);
 router.post('/updatepassword', UserController.updatePassword);
 
-router.post('/editSkill', UserController.editSkill);
+router.post('/editSkill/:userId', UserController.editSkill);
 router.post('/editCertification', UserController.editCertification);
 router.post('/editProject', UserController.editProject);
 

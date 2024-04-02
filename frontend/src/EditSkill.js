@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const EditSkill = () => {
     const [email, setEmail] = useState('');
     // const { skillId } = useParams();
+    const { userId } = useParams(); 
     const [skillMode, setSkillMode] = useState('');
     const [skills, setSkills] = useState('');
     const [rateYourself, setRateYourself] = useState(0);
@@ -13,7 +14,7 @@ const EditSkill = () => {
     const onFormSubmit = () => {
         // Send updated skill data to the backend
         const updatedSkill = { email, skillMode, skills, rateYourself, driveLink };
-        axios.post(`http://localhost:5000/editSkill`, updatedSkill)
+        axios.post(`http://localhost:5000/editSkill/${userId}`, updatedSkill)
             .then((res) => {
                 if (res.status === 200) {
                     alert('Skill updated successfully');

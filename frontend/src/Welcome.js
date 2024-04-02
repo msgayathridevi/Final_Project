@@ -32,16 +32,17 @@ function Welcome() {
         body: JSON.stringify(credentials),
       });
 
-      const data = await response.json();
+      const resp = await response.json();
+      console.log(resp);
 
-      if (data.success && data.data.role === 'admin') {
+      if (resp.success && resp.data.role === 'admin') {
         setIsAdmin(true); // Set isAdmin to true if the user is an admin
         setMessage('Login successful!');
         navigate("/home");
       } else {
         setIsAdmin(false); // Set isAdmin to false if the user is not an admin
-        setMessage(data.message);
-        navigate(`/userhomepage/${data.data._id}`);
+        setMessage(resp.message);
+        navigate(`/userhomepage/${resp.data._id}`);
       }
     } catch (error) {
       console.error('Error:', error);

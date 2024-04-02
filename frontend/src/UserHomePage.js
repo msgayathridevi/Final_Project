@@ -9,17 +9,17 @@ function HomePage() {
     <div>
       <h1>Welcome User Home Page</h1>
       <div>
-        <Link to="/editSkill">
+        <Link to="/editSkill/:userId">
           <button>Edit Skills</button>
         </Link>
       </div>
       <div>
-        <Link to="/editCertification">
+        <Link to="/editCertification/:userId">
           <button>Edit Certifications</button>
         </Link>
       </div>
       <div>
-        <Link to="/editProject">
+        <Link to="/editProject/:userId">
           <button>Edit Projects</button>
         </Link>
       </div>
