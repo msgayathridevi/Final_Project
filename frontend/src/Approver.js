@@ -6,16 +6,16 @@ function Approver() {
   const [approver, setApprover] = useState('');
   const [approvals, setApprovals] = useState([]);
   const [approval, setApproval] = useState('');
-  const [skill, setSkill] = useState('');
-  const [status, setStatus] = useState('');
+  const [skills, setSkills] = useState('');
 
-  const allSkills = ['python', 'Advanced python', 'cloud', 'dbt', 'Full Stack', 'powerBI', 'tableau', 'Redux', 'JWT'];
+  const allSkills = ['ADF', 'Alteryx', 'Angular', 'AWS', 'AWS Lambda', 'PHP', 'Power BI', 'Presenting', 'Project Mgmt', 'Python', 'React', 'React Native', 'Slides', 'Snowflake'];
 
   useEffect(() => {
     // Fetch approvers and approvals from backend
     axios.get('http://localhost:5000/approvers')
       .then(response => {
-        setApprovers(response.data.approvers);
+        console.log(response.data);
+        setApprovers(response.data);
       })
       .catch(error => {
         console.error('Error fetching approvers:', error);
@@ -23,47 +23,65 @@ function Approver() {
 
     axios.get('http://localhost:5000/approvals')
       .then(response => {
-        setApprovals(response.data.approvals);
+        setApprovals(response.data);
       })
       .catch(error => {
         console.error('Error fetching approvals:', error);
       });
   }, []);
 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const newApprover = {
+        approver,
+        approval,
+        skills
+      };
+
+      const response = await axios.post('http://localhost:5000/createapprover', newApprover);
+
+      if (response.status === 201) {
+        alert('New Approver created successfully');
+      } else {
+        alert('New Approver creation failed');
+      }
+    } catch (error) {
+      console.error('Error creating approver:', error);
+      alert('An error occurred while creating the approver. Please try again.');
+    }
+  };
+
   return (
     <div>
+    <form onSubmit={handleSubmit} >
       <label htmlFor="approver">Approver:</label>
       <select id="approver" value={approver} onChange={(e) => setApprover(e.target.value)}>
-        <option value="">Select Approver</option>
-        {approvers.map(approver => (
-          <option key={approver.id} value={approver.name}>{approver.name}</option>
+        <option value="" disabled>Select Approver</option>
+        {approvers?.map((approver, i) => (
+          <option key={i} value={approver.name}>{approver.name}</option>
         ))}
       </select>
 
       <label htmlFor="approval">Approval:</label>
       <select id="approval" value={approval} onChange={(e) => setApproval(e.target.value)}>
-        <option value="">Select Approval</option>
-        {approvals.map(approval => (
-          <option key={approval.id} value={approval.name}>{approval.name}</option>
+        <option value="" disabled>Select Approval</option>
+        {approvals?.map((approval, i) => (
+          <option key={i} value={approval.name}>{approval.name}</option>
         ))}
       </select>
 
-      <label htmlFor="skill">Skill:</label>
-      <select id="skill" value={skill} onChange={(e) => setSkill(e.target.value)}>
-        <option value="">Select Skill</option>
-        {allSkills.map(skill => (
-          <option key={skill} value={skill}>{skill}</option>
+      <label htmlFor="skills">Skills:</label>
+      <select id="skills" value={skills} onChange={(e) => setSkills(e.target.value)}>
+        <option value="" disabled>Select Skills</option>
+        {allSkills.map(skills => (
+          <option key={skills} value={skills}>{skills}</option>
         ))}
       </select>
 
-      <label htmlFor="status">Status:</label>
-      <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
-        <option value="">Select Status</option>
-        <option value="approved">Approved</option>
-        <option value="deny">Deny</option>
-        <option value="pending">Pending</option>
-        {/* Add more options as needed */}
-      </select>
+      <button type="submit">Save</button>
+      </form>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env file
+require('dotenv').config();
 
 console.log("hello");
 const emailRoute = require('./email')
@@ -29,26 +29,3 @@ mongoose.connect(`${process.env.MONGODB_URI}${process.env.MONGO_DB_AUTHO}`, { us
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 console.log('MongoDB Connected')})
   .catch(err => console.log(err)); 
-
-// Define a schema and model for example purposes
-// const Schema = mongoose.Schema;
-// const exampleSchema = new Schema({
-//   name: String,
-//   email: String,
-//   password: String,
-//   role: { type: String, enum: ['admin', 'user'] },
-//   age: Number
-// });
-// const ExampleModel = mongoose.model('Example', exampleSchema);
-
-// Example route to fetch data
-// app.get('/data', async (req, res) => {
-//   try {
-//     const data = await user.find();
-//     res.json(data);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Server Error' });
-//   }
-// });
-

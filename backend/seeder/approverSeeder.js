@@ -15,14 +15,12 @@ const approverData = [
   {
     approver: 'John Doe',
     approval: 'Approval 1',
-    skills: 'Python',
-    status: 'approved'
+    skills: 'Python'
   },
   {
     approver: 'Jane Smith',
     approval: 'Approval 2',
-    skills: 'dbt',
-    status: 'deny'
+    skills: 'dbt'
   },
   // Add more data as needed
 ];

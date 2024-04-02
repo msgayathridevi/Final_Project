@@ -8,7 +8,8 @@ const certificationSchema = new mongoose.Schema({
   expireDate: Date,
   issueDate: Date,
   durationInWeeks: Number,
-  skills: { type: String, enum: ['python', 'Advanced python', 'cloud', 'dbt', 'Full Stack', 'powerBI', 'tableau', 'Redux', 'JWT'] },
+  skills: { type: String, enum: ['ADF', 'Alteryx', 'Angular', 'AWS', 'AWS Lambda', 'PHP', 'Power BI', 'Presenting', 'Project Mgmt', 'Python', 'React', 'React Native', 'Slides', 'Snowflake'] },
+  
 });
 
 const CertificationModel = mongoose.model('Certification', certificationSchema);

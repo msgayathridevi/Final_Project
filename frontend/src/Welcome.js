@@ -37,10 +37,11 @@ function Welcome() {
       if (data.success && data.data.role === 'admin') {
         setIsAdmin(true); // Set isAdmin to true if the user is an admin
         setMessage('Login successful!');
-        // navigate("/home");
+        navigate("/home");
       } else {
         setIsAdmin(false); // Set isAdmin to false if the user is not an admin
         setMessage(data.message);
+        navigate(`/userhomepage/${data.data._id}`);
       }
     } catch (error) {
       console.error('Error:', error);

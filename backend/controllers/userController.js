@@ -2,9 +2,11 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
 const User = require('../models/employeeSchema');
+
 const SkillModel = require('../models/skillSchema');
 const CertificationModel = require('../models/CertificationSchema');
 const ProjectModel = require('../models/ProjectSchema');
+
 const ApproverModel = require('../models/approverSchema');
 
 exports.createEmployee = async (req, res) => {
@@ -66,6 +68,30 @@ function hashPassword(password) {
   hash.update(password);
   return hash.digest('hex');
 }
+
+exports.updatePassword = async (req, res) => {
+  try {
+      const emailID = req.query.emailID;
+      const { password } = req.body;
+      
+
+      const hash = crypto.createHash('sha256');
+      hash.update(password);
+      const password_hash = hash.digest('hex');
+
+      const user = await User.findOne({ email: emailID });
+      if (!user)
+          return res.status(202).send('User not found');
+      console.log(user);
+
+      user.password = password_hash;
+      await user.save();
+
+      return res.status(200).send('Password Successfuly Updated');
+  } catch (err) {
+      return res.status(500).send('Internal Error');
+  }
+};
 
 exports.editSkill = async (req, res) => {
   try {
@@ -150,14 +176,13 @@ exports.editProject = async (req, res) => {
 
 exports.createApprover = async (req, res) => {
   try {
-    const { approver, approval, status } = req.body;
+    const { approver, approval, skills, status } = req.body;
 
     // Create a new approver document
     const newApprover = new ApproverModel({
       approver,
       approval,
-      skills,
-      status
+      skills
     });
 
     // Save the new approver document to the database
@@ -166,5 +191,25 @@ exports.createApprover = async (req, res) => {
   } catch (error) {
     console.error('Error creating approver:', error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.allApprovers = async (req, res) => {
+  try {
+    const employees = await User.find();
+    res.status(200).json(employees);
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
+
+exports.allApprovals = async (req, res) => {
+  try {
+    const employees = await User.find();
+    res.status(200).json(employees);
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
