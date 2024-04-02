@@ -99,7 +99,7 @@ function Welcome() {
 
         {/* Conditionally render based on isAdmin */}
         {isAdmin ? (
-          <button onClick={() => navigate("/createuser")}>Create User</button>
+          <button onClick={() => navigate("/createemployee")}>Create User</button>
         ) : (
           <h1>Only admin</h1>
         )}

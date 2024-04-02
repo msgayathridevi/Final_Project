@@ -5,6 +5,7 @@ const User = require('../models/employeeSchema');
 const SkillModel = require('../models/skillSchema');
 const CertificationModel = require('../models/CertificationSchema');
 const ProjectModel = require('../models/ProjectSchema');
+const ApproverModel = require('../models/approverSchema');
 
 exports.createEmployee = async (req, res) => {
   try {
@@ -143,6 +144,27 @@ exports.editProject = async (req, res) => {
     return res.status(200).json({ message: 'Project updated successfully' });
   } catch (error) {
     console.error('Error updating project:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.createApprover = async (req, res) => {
+  try {
+    const { approver, approval, status } = req.body;
+
+    // Create a new approver document
+    const newApprover = new ApproverModel({
+      approver,
+      approval,
+      skills,
+      status
+    });
+
+    // Save the new approver document to the database
+    await newApprover.save();
+    return res.status(201).json({ message: 'Approver created successfully' });
+  } catch (error) {
+    console.error('Error creating approver:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

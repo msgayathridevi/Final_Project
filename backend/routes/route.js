@@ -11,6 +11,7 @@ router.post('/createemployee', UserController.createEmployee);
 router.post('/editSkill', UserController.editSkill);
 router.post('/editCertification', UserController.editCertification);
 router.post('/editProject', UserController.editProject);
+router.post('/createapprover', UserController.createApprover);
 
 router.post('/updatepassword', async (req, res) => {
     try {

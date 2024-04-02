@@ -9,6 +9,7 @@ import EditSkill from './EditSkill';
 import EditCertification from './EditCertification';
 import EditProject from './EditProject';
 import CreateEmployee from './CreateEmployee';
+import Approver from './Approver';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/editSkill" element={<EditSkill />} />
         <Route path="/editCertification" element={<EditCertification />} />
         <Route path="/editProject" element={<EditProject />} />
+        <Route path="/craeteapprover" element={<Approver />} />
       </Routes>
     </Router>
   );
