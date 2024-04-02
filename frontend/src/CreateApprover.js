@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Approver() {
+function CreateApprover() {
   const [approvers, setApprovers] = useState([]);
   const [approver, setApprover] = useState('');
   const [approvals, setApprovals] = useState([]);
@@ -86,4 +86,4 @@ function Approver() {
   );
 }
 
-export default Approver;
+export default CreateApprover;

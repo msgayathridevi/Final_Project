@@ -18,4 +18,6 @@ router.post('/createapprover', UserController.createApprover);
 router.get('/approvers', UserController.allApprovers);
 router.get('/approvals', UserController.allApprovals);
 
+router.get('/approvalstatus', UserController.ApprovalStatus);
+
 module.exports = router;

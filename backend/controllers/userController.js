@@ -8,6 +8,8 @@ const CertificationModel = require('../models/CertificationSchema');
 const ProjectModel = require('../models/ProjectSchema');
 
 const ApproverModel = require('../models/approverSchema');
+const ApprovalStatusModel = require('../models/approvalStatusSchema');
+
 
 exports.createEmployee = async (req, res) => {
   try {
@@ -176,7 +178,7 @@ exports.editProject = async (req, res) => {
 
 exports.createApprover = async (req, res) => {
   try {
-    const { approver, approval, skills, status } = req.body;
+    const { approver, approval, skills} = req.body;
 
     // Create a new approver document
     const newApprover = new ApproverModel({
@@ -211,5 +213,26 @@ exports.allApprovals = async (req, res) => {
   } catch (error) {
     console.error('Error fetching events:', error);
     res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
+
+exports.ApprovalStatus = async (req, res) => {
+  try {
+    const { approver, approval, skills, status} = req.body;
+
+    // Create a new approver document
+    const newApprovalStatus = new ApprovalStatusModel({
+      approver,
+      approval,
+      skills, 
+      status
+    });
+
+    // Save the new approver document to the database
+    await newApprovalStatus.save();
+    return res.status(201).json({ message: 'Approval done for an employee' });
+  } catch (error) {
+    console.error('Error approving an employee:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
