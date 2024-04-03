@@ -156,6 +156,8 @@ function CreateEmployee() {
           <button type="submit">Create User</button>
         </form>
       </header>
+      <button onClick={() => navigate('/')}>Logout</button>
+
     </div>
  );
 };

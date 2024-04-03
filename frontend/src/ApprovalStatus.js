@@ -97,6 +97,8 @@ function Approver() {
 
       <button type="submit">Save</button>
       </form>
+      <button onClick={() => navigate('/')}>Logout</button>
+
     </div>
   );
 }

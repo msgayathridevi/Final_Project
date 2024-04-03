@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
   const { userId } = useParams();
@@ -13,6 +14,8 @@ function HomePage() {
   const [approvalSkillsskillMode, setapprovalSkillsskillMode] = useState();
   const [approvalSkillsskillRateYourself, setapprovalSkillsskillRateYourself] = useState();
   const [approvalSkillsskillDriveLink, setapprovalSkillsskillDriveLink] = useState();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`http://localhost:5000/fetchuserapprovals/${userId}`)
@@ -144,6 +147,7 @@ function HomePage() {
           <h1>User is not an Approver</h1>
         </div>
       )}
+<button onClick={() => navigate('/')}>Logout</button>
 
     </div>
   );

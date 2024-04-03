@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const EditCertification = () => {
     const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ const EditCertification = () => {
     const [issueDate, setIssueDate] = useState('');
     const [durationInWeeks, setDurationInWeeks] = useState(0);
     const [skills, setSkills] = useState('');
+    const navigate = useNavigate();
 
     const onFormSubmit = () => {
         const updatedCertification = {
@@ -138,6 +140,8 @@ const EditCertification = () => {
                     <button type="submit">Update Certification</button>
                 </form>
             </header>
+            <button onClick={() => navigate('/')}>Logout</button>
+
         </div>
     );
 };

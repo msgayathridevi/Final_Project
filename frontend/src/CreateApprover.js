@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CreateApprover() {
   const [approvers, setApprovers] = useState([]);
@@ -8,6 +9,9 @@ function CreateApprover() {
   const [approval, setApproval] = useState('');
   const [skills, setSkills] = useState('');
 
+  
+  const navigate = useNavigate();
+  
   const allSkills = ['ADF', 'Alteryx', 'Angular', 'AWS', 'AWS Lambda', 'PHP', 'Power BI', 'Presenting', 'Project Mgmt', 'Python', 'React', 'React Native', 'Slides', 'Snowflake'];
 
   useEffect(() => {
@@ -86,6 +90,8 @@ function CreateApprover() {
 
       <button type="submit">Save</button>
       </form>
+      <button onClick={() => navigate('/')}>Logout</button>
+
     </div>
   );
 }

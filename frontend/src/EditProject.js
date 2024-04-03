@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const EditProject = () => {
     const [email, setEmail] = useState('');
@@ -11,6 +12,9 @@ const EditProject = () => {
     const [skillsGained, setSkillsGained] = useState('');
     const [mentor, setMentor] = useState('');
     const [client, setClient] = useState('');
+
+    
+  const navigate = useNavigate();
 
     const onFormSubmit = () => {
         const updatedProject = {
@@ -162,6 +166,8 @@ const EditProject = () => {
                     <button type="submit">Update Project</button>
                 </form>
             </header>
+            <button onClick={() => navigate('/')}>Logout</button>
+
         </div>
     );
 };

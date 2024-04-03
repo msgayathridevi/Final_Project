@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const EditSkill = () => {
     const [email, setEmail] = useState('');
@@ -10,6 +11,7 @@ const EditSkill = () => {
     const [driveLink, setDriveLink] = useState('');
 
 
+    const navigate = useNavigate();
     const { userId } = useParams();
     console.log('userId: in editskills', userId);
 
@@ -113,6 +115,8 @@ const EditSkill = () => {
                     <button type="submit">Update Skill</button>
                 </form>
             </header>
+            <button onClick={() => navigate('/')}>Logout</button>
+
         </div>
     );
 };
