@@ -4,25 +4,29 @@ import { useParams } from 'react-router-dom';
 
 const EditSkill = () => {
     const [email, setEmail] = useState('');
-    // const { skillId } = useParams();
-    const { userId } = useParams(); 
     const [skillMode, setSkillMode] = useState('');
     const [skills, setSkills] = useState('');
     const [rateYourself, setRateYourself] = useState(0);
     const [driveLink, setDriveLink] = useState('');
 
+
+    const { userId } = useParams();
+    console.log('userId: in editskills', userId);
+
     const onFormSubmit = () => {
         // Send updated skill data to the backend
         const updatedSkill = { email, skillMode, skills, rateYourself, driveLink };
         axios.post(`http://localhost:5000/editSkill/${userId}`, updatedSkill)
+
             .then((res) => {
                 if (res.status === 200) {
-                    alert('Skill updated successfully');
+                    alert('Skill updated successfully' + userId);
                 }
                 console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
+                alert('Skill not updated successfully');
             });
     };
 
@@ -71,16 +75,11 @@ const EditSkill = () => {
                             required
                         >
                             <option value="">Select Skill</option>
-                            <option value="python">Python</option>
-                            <option value="Advanced python">Advanced Python</option>
-                            <option value="cloud">Cloud</option>
-                            <option value="dbt">DBT</option>
-                            <option value="Full Stack">Full Stack</option>
-                            <option value="powerBI">PowerBI</option>
-                            <option value="tableau">Tableau</option>
-                            <option value="Redux">Redux</option>
-                            <option value="JWT">JWT</option>
+                            {['ADF', 'Alteryx', 'Angular', 'AWS', 'AWS Lambda', 'PHP', 'Power BI', 'Presenting', 'Project Mgmt', 'Python', 'React', 'React Native', 'Slides', 'Snowflake'].map(skill => (
+                                <option key={skill} value={skill}>{skill}</option>
+                            ))}
                         </select>
+
                     </div>
 
                     <div className="form-group">

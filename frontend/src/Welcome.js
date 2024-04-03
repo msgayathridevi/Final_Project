@@ -43,6 +43,7 @@ function Welcome() {
         setIsAdmin(false); // Set isAdmin to false if the user is not an admin
         setMessage(resp.message);
         navigate(`/userhomepage/${resp.data._id}`);
+        // alert(resp.data._id);
       }
     } catch (error) {
       console.error('Error:', error);

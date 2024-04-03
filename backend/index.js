@@ -12,7 +12,7 @@ const app = express();
 
 app.use(cors()); 
 app.use((req, res, next) => {
-  console.log("Cors passed");
+  // console.log("Cors passed");
   next();
 });
 app.use(morgan('tiny'));

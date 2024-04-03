@@ -5,7 +5,7 @@ const router = express.Router();
 // http://localhost:5000/sendmail?requestingEmail=gaya@gmail.com
 router.get('/sendmail', async (req, res) => {
     const requestingEmail = req.query.requestingEmail;
-    console.log(requestingEmail);
+    // console.log(requestingEmail);
 
     const link = `Update Password here: http://localhost:3000/changepassword?emailID=${requestingEmail}`
 

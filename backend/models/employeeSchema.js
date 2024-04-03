@@ -8,7 +8,8 @@ const employeeSchema = new mongoose.Schema({
   age: Number,
   phoneNumber: String, 
   designation: { type: String, enum: ['Software Engineer', 'Sr. Software Engineer', 'Solution Enabler', 'Consultant'] },
-  department: { type: String, enum: ['Developer', 'Quality Analyst', 'HR', 'Financial Team', 'Management'] }
+  department: { type: String, enum: ['Developer', 'Quality Analyst', 'HR', 'Financial Team', 'Management'] },
+  isApprover: { type: Boolean, default: false } 
 });
 
 const EmployeeModel = mongoose.model('Employee', employeeSchema);

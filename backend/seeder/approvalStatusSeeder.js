@@ -3,7 +3,7 @@ const approvalStatusModel = require('../models/approvalStatusSchema');
 require('dotenv').config();
 
 const mongoURI = process.env.MONGODB_URI + process.env.MONGO_DB_AUTHO;
-console.log(mongoURI);
+// console.log(mongoURI);
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('MongoDB Connected');
@@ -32,7 +32,7 @@ async function seed() {
   try {
     // Insert seed data into the database
     await approvalStatusModel.insertMany(approverData);
-    console.log('Data seeding complete');
+    // console.log('Data seeding complete');
   } catch (error) {
     console.error('Error seeding data:', error);
   } finally {

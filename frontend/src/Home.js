@@ -9,7 +9,7 @@ function Home() {
         <Link to="/createemployee">
           <button>Create User</button>
         </Link>
-        <Link to="/createaprover">
+        <Link to="/createapprover">
           <button>Create Approver</button>
         </Link>
       </header>

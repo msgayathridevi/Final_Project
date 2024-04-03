@@ -3,7 +3,7 @@ const ApproverModel = require('../models/approverSchema');
 require('dotenv').config();
 
 const mongoURI = process.env.MONGODB_URI + process.env.MONGO_DB_AUTHO;
-console.log(mongoURI);
+// console.log(mongoURI);
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('MongoDB Connected');

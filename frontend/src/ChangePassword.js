@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 const ChangePassword = () => {
     const emailID = new URLSearchParams(useLocation().search).get('emailID');
-    console.log(emailID);
+    // console.log(emailID);
     const [password, setPassword] = useState('');
 
     const onFormSubmit = () => {

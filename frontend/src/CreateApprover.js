@@ -14,7 +14,7 @@ function CreateApprover() {
     // Fetch approvers and approvals from backend
     axios.get('http://localhost:5000/approvers')
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         setApprovers(response.data);
       })
       .catch(error => {
