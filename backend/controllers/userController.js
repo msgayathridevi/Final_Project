@@ -59,7 +59,7 @@ exports.authenticateUser = async (req, res) => {
     }
 
     jwt.sign({ user }, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
-      console.log(token)
+      // console.log(token)
       return res.status(201).json({ success: true, data: user, token: token, message: 'Login successful!' });
     });
 
@@ -311,10 +311,13 @@ exports.ApprovalStatus = async (req, res) => {
 
 exports.fetchuserapprovals = async (req, res) => {
   try {
+    console.log("**********")
     const user = await EmployeeModel.findById(req.params.userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    console.log("user " + user);
+    console.log("user.isApprover " + user.isApprover );
 
     // Check if the user is an approver
     const name = user.name;
@@ -339,7 +342,7 @@ exports.fetchApprovalSkills = async (req, res) => {
 
     // Find the user ID based on the approval name
     const employee = await EmployeeModel.findOne({ name: approval });
-    console.log(employee._id);
+    // console.log(employee._id);
     if (!employee) {
       return res.status(404).json({ message: 'Employee not found for the given approval' });
     }

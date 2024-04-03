@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import './welcome.css';
+
 function Welcome() {
   localStorage.clear();
 
@@ -36,7 +38,7 @@ function Welcome() {
 
       const resp = await response.json();
       localStorage.setItem("token", resp.token)
-      console.log(resp.token);
+      // console.log(resp.token);
 
       if (resp.success && resp.data.role === 'admin') {
         setIsAdmin(true); // Set isAdmin to true if the user is an admin

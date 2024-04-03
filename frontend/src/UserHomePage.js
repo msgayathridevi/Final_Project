@@ -78,8 +78,8 @@ function HomePage() {
       });
   };
 
-
-
+  
+  console.log(isApprover);
 
   return (
     <div>
@@ -99,6 +99,7 @@ function HomePage() {
           <button>Edit Your Projects</button>
         </Link>
       </div>
+
 
       {isApprover ? (
         <div>
