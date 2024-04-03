@@ -29,3 +29,7 @@ mongoose.connect(`${process.env.MONGODB_URI}${process.env.MONGO_DB_AUTHO}`, { us
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 console.log('MongoDB Connected')})
   .catch(err => console.log(err)); 
+
+
+  
+// Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
