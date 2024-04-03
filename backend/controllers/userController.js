@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
+const jwt = require("jsonwebtoken");
+
 const EmployeeModel = require('../models/employeeSchema');
 
 const SkillModel = require('../models/skillSchema');
@@ -56,9 +58,11 @@ exports.authenticateUser = async (req, res) => {
       return res.status(401).json({ success: false, message: 'Invalid password' });
     }
 
-    // Authentication successful
-    // Optionally, you can set a session or generate a token here
-    return res.status(201).json({ success: true, data: user, message: 'Login successful!' });
+    jwt.sign({ user }, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
+      console.log(token)
+      return res.status(201).json({ success: true, data: user, token:token, message: 'Login successful!' });
+    });
+
   } catch (error) {
     console.error('Error authenticating user:', error);
     return res.status(500).json({ success: false, message: 'An error occurred during login' });

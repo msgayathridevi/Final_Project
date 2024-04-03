@@ -28,7 +28,11 @@ function CreateEmployee() {
       };
 
       // const response = await axios.post('http://localhost:5000/user/api/createuser', newEmployee);
-      const response = await axios.post('http://localhost:5000/createemployee', newEmployee);
+      const response = await axios.post('http://localhost:5000/createemployee', newEmployee, {
+        headers:{
+           Authorization:"Bearer "+localStorage.getItem("token"),
+         },
+       });
 
       if (response.status === 201) {
         alert('User created successfully');

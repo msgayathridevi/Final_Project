@@ -21,7 +21,11 @@ const EditCertification = () => {
             skills
         };
 
-        axios.post('http://localhost:5000/editCertification', updatedCertification)
+        axios.post('http://localhost:5000/editCertification', updatedCertification, {
+            headers:{
+               Authorization:"Bearer "+localStorage.getItem("token"),
+             },
+           })
             .then((res) => {
                 if (res.status === 200) {
                     alert('Certification updated successfully');

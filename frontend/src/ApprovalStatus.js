@@ -42,7 +42,11 @@ function Approver() {
         status
       };
 
-      const response = await axios.post('http://localhost:5000/createapprover', newApprover);
+      const response = await axios.post('http://localhost:5000/createapprover', newApprover, {
+        headers:{
+           Authorization:"Bearer "+localStorage.getItem("token"),
+         },
+       });
 
       if (response.status === 201) {
         alert('New Approver created successfully');

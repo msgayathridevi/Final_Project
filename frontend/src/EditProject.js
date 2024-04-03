@@ -25,7 +25,11 @@ const EditProject = () => {
             client
         };
 
-        axios.post(`http://localhost:5000/editProject`, updatedProject)
+        axios.post(`http://localhost:5000/editProject`, updatedProject, {
+            headers:{
+               Authorization:"Bearer "+localStorage.getItem("token"),
+             },
+           })
             .then((res) => {
                 if (res.status === 200) {
                     alert('Project updated successfully');

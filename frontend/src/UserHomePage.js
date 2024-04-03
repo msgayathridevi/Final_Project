@@ -30,7 +30,11 @@ function HomePage() {
 
   const handleViewDetails = (approval) => {
     // console.log("view details approval: " + approval);
-    axios.post(`http://localhost:5000/fetchApprovalSkills`, { approval })
+    axios.post(`http://localhost:5000/fetchApprovalSkills`, { approval }, {
+      headers:{
+         Authorization:"Bearer "+localStorage.getItem("token"),
+       },
+     })
       .then(response => {
         // console.log("Frontend response:", response);
         // console.log("skillmode"+response.data.data[0].skillMode)
@@ -57,7 +61,11 @@ function HomePage() {
     }
 
     // Send the data to the backend
-    axios.post(`http://localhost:5000/updateApprovalStatus`, { userId, approval, status })
+    axios.post(`http://localhost:5000/updateApprovalStatus`, { userId, approval, status }, {
+      headers:{
+         Authorization:"Bearer "+localStorage.getItem("token"),
+       },
+     })
       .then(response => {
         alert("Status updated successfully");
       })

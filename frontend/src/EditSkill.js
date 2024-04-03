@@ -16,7 +16,11 @@ const EditSkill = () => {
     const onFormSubmit = () => {
         // Send updated skill data to the backend
         const updatedSkill = { email, skillMode, skills, rateYourself, driveLink };
-        axios.post(`http://localhost:5000/editSkill/${userId}`, updatedSkill)
+        axios.post(`http://localhost:5000/editSkill/${userId}`, updatedSkill, {
+            headers:{
+               Authorization:"Bearer "+localStorage.getItem("token"),
+             },
+           })
 
             .then((res) => {
                 if (res.status === 200) {

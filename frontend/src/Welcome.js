@@ -33,7 +33,8 @@ function Welcome() {
       });
 
       const resp = await response.json();
-      console.log(resp);
+      localStorage.setItem("token", resp.token)
+      console.log(resp.token);
 
       if (resp.success && resp.data.role === 'admin') {
         setIsAdmin(true); // Set isAdmin to true if the user is an admin
