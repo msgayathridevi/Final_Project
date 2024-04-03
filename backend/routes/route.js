@@ -9,8 +9,8 @@ router.post('/createemployee', authMiddleware, UserController.createEmployee);
 router.post('/updatepassword', authMiddleware, UserController.updatePassword);
 
 router.post('/editSkill/:userId', authMiddleware, UserController.editSkill);
-router.post('/editCertification', authMiddleware, UserController.editCertification);
-router.post('/editProject', authMiddleware, UserController.editProject);
+router.post('/editCertification/:userId', authMiddleware, UserController.editCertification);
+router.post('/editProject/:userId', authMiddleware, UserController.editProject);
 
 router.post('/createapprover', authMiddleware, UserController.createApprover);
 router.get('/approvers', authMiddleware, UserController.allApprovers);

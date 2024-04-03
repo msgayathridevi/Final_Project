@@ -30,7 +30,7 @@ exports.createEmployee = async (req, res) => {
     const password_hash = hash.digest('hex');
     // console.log(password_hash);
 
-    const user = new EmployeeModel({name, email: email.toLowerCase(), password: password_hash, role, age, phoneNumber, designation, department});
+    const user = new EmployeeModel({ name, email: email.toLowerCase(), password: password_hash, role, age, phoneNumber, designation, department });
     // console.log(user)
     await user.save();
     res.status(201).json({ message: 'User created successfully', user });
@@ -60,7 +60,7 @@ exports.authenticateUser = async (req, res) => {
 
     jwt.sign({ user }, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
       console.log(token)
-      return res.status(201).json({ success: true, data: user, token:token, message: 'Login successful!' });
+      return res.status(201).json({ success: true, data: user, token: token, message: 'Login successful!' });
     });
 
   } catch (error) {
@@ -77,25 +77,25 @@ function hashPassword(password) {
 
 exports.updatePassword = async (req, res) => {
   try {
-      const emailID = req.query.emailID;
-      const { password } = req.body;
-      
+    const emailID = req.query.emailID;
+    const { password } = req.body;
 
-      const hash = crypto.createHash('sha256');
-      hash.update(password);
-      const password_hash = hash.digest('hex');
 
-      const user = await EmployeeModel.findOne({ email: emailID });
-      if (!user)
-          return res.status(202).send('User not found');
-      // console.log(user);
+    const hash = crypto.createHash('sha256');
+    hash.update(password);
+    const password_hash = hash.digest('hex');
 
-      user.password = password_hash;
-      await user.save();
+    const user = await EmployeeModel.findOne({ email: emailID });
+    if (!user)
+      return res.status(202).send('User not found');
+    // console.log(user);
 
-      return res.status(200).send('Password Successfuly Updated');
+    user.password = password_hash;
+    await user.save();
+
+    return res.status(200).send('Password Successfuly Updated');
   } catch (err) {
-      return res.status(500).send('Internal Error');
+    return res.status(500).send('Internal Error');
   }
 };
 
@@ -128,7 +128,7 @@ exports.editSkill = async (req, res) => {
 
     // Save the skill to the database
     await existingSkill.save();
-    
+
     return res.status(200).json({ message: 'Skill updated successfully' });
   } catch (error) {
     console.error('Error updating skill:', error);
@@ -138,24 +138,39 @@ exports.editSkill = async (req, res) => {
 
 exports.editCertification = async (req, res) => {
   try {
-    const { email, driveLink, organization, expireDate, issueDate, durationInWeeks, skills } = req.body;
+    const { email, credentialsID, driveLink, organization, expireDate, issueDate, durationInWeeks, skills } = req.body;
+    const userId = req.params.userId;
 
     // Check if the certification exists
-    const existingCertification = await CertificationModel.findOne({ email });
+    let existingCertification = await CertificationModel.findOne({ userId });
+
     if (!existingCertification) {
-      return res.status(404).json({ message: 'Certification not found' });
+      // If certification does not exist, create a new one
+      existingCertification = new CertificationModel({
+        email,
+        userId,
+        credentialsID,
+        driveLink,
+        organization,
+        expireDate,
+        issueDate,
+        durationInWeeks,
+        skills
+      });
+    } else {
+      // If certification exists, update it with the new data
+      existingCertification.credentialsID = credentialsID;
+      existingCertification.driveLink = driveLink;
+      existingCertification.organization = organization;
+      existingCertification.expireDate = expireDate;
+      existingCertification.issueDate = issueDate;
+      existingCertification.durationInWeeks = durationInWeeks;
+      existingCertification.skills = skills;
     }
 
-    // Update the certification with the new data
-    existingCertification.driveLink = driveLink;
-    existingCertification.organization = organization;
-    existingCertification.expireDate = expireDate;
-    existingCertification.issueDate = issueDate;
-    existingCertification.durationInWeeks = durationInWeeks;
-    existingCertification.skills = skills;
-
-    // Save the updated certification in the database
+    // Save the certification to the database
     await existingCertification.save();
+
     return res.status(200).json({ message: 'Certification updated successfully' });
   } catch (error) {
     console.error('Error updating certification:', error);
@@ -166,25 +181,39 @@ exports.editCertification = async (req, res) => {
 exports.editProject = async (req, res) => {
   try {
     const { email, projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client } = req.body;
+    const userId = req.params.userId;
 
-    // Check if the project exists
-    const existingProject = await ProjectModel.findOne({ email });
+    let existingProject = await ProjectModel.findOne({ userId });
+
     if (!existingProject) {
-      return res.status(404).json({ message: 'Project not found' });
+      // If project does not exist, create a new one
+      existingProject = new ProjectModel({
+        email,
+        userId,
+        projectName,
+        years,
+        startDate,
+        endDate,
+        projectDescription,
+        skillsGained,
+        mentor,
+        client
+      });
+    } else {
+      // If project exists, update it with the new data
+      existingProject.projectName = projectName;
+      existingProject.years = years;
+      existingProject.startDate = startDate;
+      existingProject.endDate = endDate;
+      existingProject.projectDescription = projectDescription;
+      existingProject.skillsGained = skillsGained;
+      existingProject.mentor = mentor;
+      existingProject.client = client;
     }
 
-    // Update the project with the new data
-    existingProject.projectName = projectName;
-    existingProject.years = years;
-    existingProject.startDate = startDate;
-    existingProject.endDate = endDate;
-    existingProject.projectDescription = projectDescription;
-    existingProject.skillsGained = skillsGained;
-    existingProject.mentor = mentor;
-    existingProject.client = client;
-
-    // Save the updated project in the database
+    // Save the project to the database
     await existingProject.save();
+
     return res.status(200).json({ message: 'Project updated successfully' });
   } catch (error) {
     console.error('Error updating project:', error);
@@ -192,14 +221,15 @@ exports.editProject = async (req, res) => {
   }
 };
 
+
 exports.createApprover = async (req, res) => {
   try {
-    const { approver, approval, skills} = req.body;
+    const { approver, approval, skills } = req.body;
     // console.log(approver);    
-    
+
     const existingEmployee = await EmployeeModel.findOne({ name: approver });
     // console.log("Existing employee: ", existingEmployee);
-    
+
     if (!existingEmployee) {
       // console.log("Approver not found in employee records");
       return res.status(404).json({ message: 'Approver not found in employee records' });
@@ -214,7 +244,7 @@ exports.createApprover = async (req, res) => {
 
     // Save the new approver document to the database
     existingEmployee.isApprover = "true";
-    
+
     // console.log("Existing employee: ", existingEmployee);
     await newApprover.save();
     await existingEmployee.save();
@@ -247,13 +277,13 @@ exports.allApprovals = async (req, res) => {
 
 exports.ApprovalStatus = async (req, res) => {
   try {
-    const { approver, approval, skills, status} = req.body;
+    const { approver, approval, skills, status } = req.body;
 
     // Create a new approver document
     const newApprovalStatus = new ApprovalStatusModel({
       approver,
       approval,
-      skills, 
+      skills,
       status
     });
 
@@ -285,17 +315,17 @@ exports.fetchuserapprovals = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    
+
     // Check if the user is an approver
     const name = user.name;
     const isApprover = user.isApprover || false;
-    
+
     // If the user is an approver, find associated approvals
     let approvals = [];
     if (isApprover) {
       approvals = await ApproverModel.find({ approver: name });
     }
-    
+
     res.status(200).json({ isApprover, approvals });
   } catch (error) {
     console.error('Error fetching user approvals:', error);

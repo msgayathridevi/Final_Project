@@ -34,6 +34,6 @@ async function seed() {
   } catch (error) {
     console.error('Error seeding data:', error);
   } finally {
-    mongoose.disconnect(); 
+    mongoose.disconnect();
   }
 }

@@ -19,11 +19,11 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/createemployee" element={<CreateEmployee />} />
         <Route path="/changepassword" element={<ChangePassword />} />
-        
+
         <Route path="/userhomepage/:userId" element={<UserHomePage />} />
         <Route path="/editSkill/:userId" element={<EditSkill />} />
-        <Route path="/editCertification" element={<EditCertification />} />
-        <Route path="/editProject" element={<EditProject />} />
+        <Route path="/editCertification/:userId" element={<EditCertification />} />
+        <Route path="/editProject/:userId" element={<EditProject />} />
         <Route path="/createapprover/" element={<CreateApprover />} />
       </Routes>
     </Router>

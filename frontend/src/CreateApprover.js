@@ -9,9 +9,9 @@ function CreateApprover() {
   const [approval, setApproval] = useState('');
   const [skills, setSkills] = useState('');
 
-  
+
   const navigate = useNavigate();
-  
+
   const allSkills = ['ADF', 'Alteryx', 'Angular', 'AWS', 'AWS Lambda', 'PHP', 'Power BI', 'Presenting', 'Project Mgmt', 'Python', 'React', 'React Native', 'Slides', 'Snowflake'];
 
   useEffect(() => {
@@ -45,10 +45,10 @@ function CreateApprover() {
       };
 
       const response = await axios.post('http://localhost:5000/createapprover', newApprover, {
-        headers:{
-           Authorization:"Bearer "+localStorage.getItem("token"),
-         },
-       });
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
 
       if (response.status === 201) {
         alert('New Approver created successfully');
@@ -63,34 +63,34 @@ function CreateApprover() {
 
   return (
     <div>
-    <form onSubmit={handleSubmit} >
-      <label htmlFor="approver">Approver:</label>
-      <select id="approver" value={approver} onChange={(e) => setApprover(e.target.value)}>
-        <option value="" disabled>Select Approver</option>
-        {approvers?.map((approver, i) => (
-          <option key={i} value={approver.name}>{approver.name}</option>
-        ))}
-      </select>
+      <form onSubmit={handleSubmit} >
+        <label htmlFor="approver">Approver:</label>
+        <select id="approver" value={approver} onChange={(e) => setApprover(e.target.value)}>
+          <option value="" disabled>Select Approver</option>
+          {approvers?.map((approver, i) => (
+            <option key={i} value={approver.name}>{approver.name}</option>
+          ))}
+        </select>
 
-      <label htmlFor="approval">Approval:</label>
-      <select id="approval" value={approval} onChange={(e) => setApproval(e.target.value)}>
-        <option value="" disabled>Select Approval</option>
-        {approvals?.map((approval, i) => (
-          <option key={i} value={approval.name}>{approval.name}</option>
-        ))}
-      </select>
+        <label htmlFor="approval">Approval:</label>
+        <select id="approval" value={approval} onChange={(e) => setApproval(e.target.value)}>
+          <option value="" disabled>Select Approval</option>
+          {approvals?.map((approval, i) => (
+            <option key={i} value={approval.name}>{approval.name}</option>
+          ))}
+        </select>
 
-      <label htmlFor="skills">Skills:</label>
-      <select id="skills" value={skills} onChange={(e) => setSkills(e.target.value)}>
-        <option value="" disabled>Select Skills</option>
-        {allSkills.map(skills => (
-          <option key={skills} value={skills}>{skills}</option>
-        ))}
-      </select>
+        <label htmlFor="skills">Skills:</label>
+        <select id="skills" value={skills} onChange={(e) => setSkills(e.target.value)}>
+          <option value="" disabled>Select Skills</option>
+          {allSkills.map(skills => (
+            <option key={skills} value={skills}>{skills}</option>
+          ))}
+        </select>
 
-      <button type="submit">Save</button>
+        <button type="submit">Save</button>
       </form>
-      <button onClick={() => navigate('/')}>Logout</button>
+      <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
 
     </div>
   );

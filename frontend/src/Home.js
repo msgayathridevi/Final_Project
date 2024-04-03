@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const navigate = useNavigate();
-  
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,7 +16,7 @@ function Home() {
           <button>Create Approver</button>
         </Link>
       </header>
-      <button onClick={() => navigate('/')}>Logout</button>
+      <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
 
     </div>
   );

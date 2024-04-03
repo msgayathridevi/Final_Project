@@ -29,10 +29,10 @@ function CreateEmployee() {
 
       // const response = await axios.post('http://localhost:5000/user/api/createuser', newEmployee);
       const response = await axios.post('http://localhost:5000/createemployee', newEmployee, {
-        headers:{
-           Authorization:"Bearer "+localStorage.getItem("token"),
-         },
-       });
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
 
       if (response.status === 201) {
         alert('User created successfully');
@@ -156,10 +156,11 @@ function CreateEmployee() {
           <button type="submit">Create User</button>
         </form>
       </header>
-      <button onClick={() => navigate('/')}>Logout</button>
+      <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
+
 
     </div>
- );
+  );
 };
 
 export default CreateEmployee;

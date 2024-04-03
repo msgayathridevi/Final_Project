@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const projectSchema = new mongoose.Schema({
   email: String,
   userId: String,
-  projectID: String,
   projectName: String,
   years: Number,
   startDate: Date,

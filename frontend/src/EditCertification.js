@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const EditCertification = () => {
     const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const EditCertification = () => {
     const [durationInWeeks, setDurationInWeeks] = useState(0);
     const [skills, setSkills] = useState('');
     const navigate = useNavigate();
+    const { userId } = useParams();
 
     const onFormSubmit = () => {
         const updatedCertification = {
@@ -23,14 +25,14 @@ const EditCertification = () => {
             skills
         };
 
-        axios.post('http://localhost:5000/editCertification', updatedCertification, {
+        axios.post(`http://localhost:5000/editCertification/${userId}`, updatedCertification, {
             headers:{
                Authorization:"Bearer "+localStorage.getItem("token"),
              },
            })
             .then((res) => {
                 if (res.status === 200) {
-                    alert('Certification updated successfully');
+                    alert('Certification updated successfully' + userId);
                 }
                 console.log(res.data);
             })
@@ -138,9 +140,9 @@ const EditCertification = () => {
 
                     </div>
                     <button type="submit">Update Certification</button>
-                </form>
+                </form>F
             </header>
-            <button onClick={() => navigate('/')}>Logout</button>
+      <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
 
         </div>
     );

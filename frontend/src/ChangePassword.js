@@ -8,19 +8,19 @@ const ChangePassword = () => {
     const [password, setPassword] = useState('');
 
     const onFormSubmit = () => {
-        axios.post('http://localhost:5000/user/updatepassword', {password}, {params: {emailID}}, {
-            headers:{
-               Authorization:"Bearer "+localStorage.getItem("token"),
-             },
-           })
-        .then((res) => {
-            if(res.status === 200) {
-                alert('Password Changed');
-            }
-            console.log(res.data);
-        }).catch(err => {
-            console.log(err);
+        axios.post('http://localhost:5000/user/updatepassword', { password }, { params: { emailID } }, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
         })
+            .then((res) => {
+                if (res.status === 200) {
+                    alert('Password Changed');
+                }
+                console.log(res.data);
+            }).catch(err => {
+                console.log(err);
+            })
     }
 
     return (

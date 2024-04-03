@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function Welcome() {
   localStorage.clear();
-  
+
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: '',

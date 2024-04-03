@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const EditProject = () => {
     const [email, setEmail] = useState('');
@@ -13,8 +14,9 @@ const EditProject = () => {
     const [mentor, setMentor] = useState('');
     const [client, setClient] = useState('');
 
-    
-  const navigate = useNavigate();
+
+    const navigate = useNavigate();
+    const { userId } = useParams();
 
     const onFormSubmit = () => {
         const updatedProject = {
@@ -29,14 +31,14 @@ const EditProject = () => {
             client
         };
 
-        axios.post(`http://localhost:5000/editProject`, updatedProject, {
-            headers:{
-               Authorization:"Bearer "+localStorage.getItem("token"),
-             },
-           })
+        axios.post(`http://localhost:5000/editProject/${userId}`, updatedProject, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        })
             .then((res) => {
                 if (res.status === 200) {
-                    alert('Project updated successfully');
+                    alert('Project updated successfully' + userId);
                 }
                 console.log(res.data);
             })
@@ -166,7 +168,7 @@ const EditProject = () => {
                     <button type="submit">Update Project</button>
                 </form>
             </header>
-            <button onClick={() => navigate('/')}>Logout</button>
+            <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
 
         </div>
     );

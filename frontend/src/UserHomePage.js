@@ -34,10 +34,10 @@ function HomePage() {
   const handleViewDetails = (approval) => {
     // console.log("view details approval: " + approval);
     axios.post(`http://localhost:5000/fetchApprovalSkills`, { approval }, {
-      headers:{
-         Authorization:"Bearer "+localStorage.getItem("token"),
-       },
-     })
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
       .then(response => {
         // console.log("Frontend response:", response);
         // console.log("skillmode"+response.data.data[0].skillMode)
@@ -65,10 +65,10 @@ function HomePage() {
 
     // Send the data to the backend
     axios.post(`http://localhost:5000/updateApprovalStatus`, { userId, approval, status }, {
-      headers:{
-         Authorization:"Bearer "+localStorage.getItem("token"),
-       },
-     })
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
       .then(response => {
         alert("Status updated successfully");
       })
@@ -90,12 +90,12 @@ function HomePage() {
         </Link>
       </div>
       <div>
-        <Link to="/editCertification/:userId">
+        <Link to={`/editCertification/${userId}`}>
           <button>Edit Your Certifications</button>
         </Link>
       </div>
       <div>
-        <Link to="/editProject/:userId">
+        <Link to={`/editProject/${userId}`}>
           <button>Edit Your Projects</button>
         </Link>
       </div>
@@ -147,7 +147,7 @@ function HomePage() {
           <h1>User is not an Approver</h1>
         </div>
       )}
-<button onClick={() => navigate('/')}>Logout</button>
+      <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
 
     </div>
   );
