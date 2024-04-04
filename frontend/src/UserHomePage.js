@@ -79,7 +79,7 @@ function HomePage() {
   };
 
   
-  console.log(isApprover);
+  // console.log(isApprover);
 
   return (
     <div>
@@ -148,7 +148,7 @@ function HomePage() {
           <h1>User is not an Approver</h1>
         </div>
       )}
-      <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
+      <button onClick={() => { localStorage.clear(); localStorage.removeItem('token'); navigate('/') }}>Logout</button>
 
     </div>
   );

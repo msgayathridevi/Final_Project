@@ -19,8 +19,12 @@ router.get('/approvals', authMiddleware, UserController.allApprovals);
 // router.get('/approvalstatus', UserController.ApprovalStatus);
 // router.get('/isUserApprover/:userId', UserController.isUserApprover);
 
-router.get('/fetchuserapprovals/:userId', authMiddleware, UserController.fetchuserapprovals);
+router.get('/fetchuserapprovals/:userId', UserController.fetchuserapprovals);
 router.post('/fetchApprovalSkills', authMiddleware, UserController.fetchApprovalSkills);
 router.post('/updateApprovalStatus', authMiddleware, UserController.updateApprovalStatus);
+
+
+router.get('/adminDashboard', UserController.adminDashboard);
+router.get('/fetchCertificationDetailAdminDashboard/:approvalName', UserController.fetchCertificationDetailAdminDashboard);
 
 module.exports = router;

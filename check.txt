@@ -1,0 +1,12 @@
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+- diff btw local, session and cookies for jwt
+- routinga nd controllers
+- localStorage.removeItem('token');
+- fetchuserapprovals no jwt
+- check approvers approvals get with jwt
+- same name can be be'coz all handled with userid
+- remove email id from skills, certi and proejcts
+- display the details for approver with respect to the skills
+- change navigation after logging in

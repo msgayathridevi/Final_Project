@@ -311,13 +311,10 @@ exports.ApprovalStatus = async (req, res) => {
 
 exports.fetchuserapprovals = async (req, res) => {
   try {
-    console.log("**********")
     const user = await EmployeeModel.findById(req.params.userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    console.log("user " + user);
-    console.log("user.isApprover " + user.isApprover );
 
     // Check if the user is an approver
     const name = user.name;
@@ -391,4 +388,46 @@ exports.updateApprovalStatus = async (req, res) => {
   }
 };
 
+
+exports.adminDashboard = async (req, res) => {
+  try {
+    // Find all approvers in the database
+    const approvers = await ApproverModel.find();
+    // console.log(approvers);
+
+    // Check if any approvers were found
+    if (!approvers || approvers.length === 0) {
+      return res.status(404).json({ message: 'No approvers found' });
+    }
+
+    // Return the list of approvers
+    res.status(200).json({ approvers });
+  } catch (error) {
+    console.error('Error fetching approvers:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.fetchCertificationDetailAdminDashboard = async (req, res) => {
+  try {
+    const approvalName = req.params.approvalName;
+
+    // Find the user ID based on the approval name
+    const user = await EmployeeModel.findOne({ name: approvalName });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Find the certification details based on the user ID
+    const certification = await CertificationModel.findOne({ userId: user._id });
+    
+    // Extract the driveLink from the certification
+    const driveLink = certification ? certification.driveLink : null;
+
+    res.status(200).json({ driveLink });
+  } catch (error) {
+    console.error('Error fetching certification details:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
