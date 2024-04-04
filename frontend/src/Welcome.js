@@ -57,17 +57,24 @@ function Welcome() {
   };
 
   const onChangePasswordClicked = () => {
-    axios.get('http://localhost:5000/sendmail', { params: { requestingEmail: credentials.email } })
-      .then(res => {
-        if (res.status === 200) {
-          alert('Mail Sent!');
-        } else {
-          console.log(res.data);
-        }
-      }).catch(err => {
-        console.log(err);
-      });
+    // Prompt user for email input
+    const userEmail = window.prompt('Enter your email:');
+  
+    // Check if userEmail is not null (i.e., user clicked OK)
+    if (userEmail !== null) {
+      axios.get('http://localhost:5000/sendmailtoUpdatePassword', { params: { requestingEmail: userEmail } })
+        .then(res => {
+          if (res.status === 200) {
+            alert('Mail Sent!');
+          } else {
+            console.log(res.data);
+          }
+        }).catch(err => {
+          console.log(err);
+        });
+    }
   };
+  
 
   return (
     <div className="App">
@@ -102,7 +109,7 @@ function Welcome() {
         <button onClick={(e) => {
           e.preventDefault();
           onChangePasswordClicked();
-        }}>Change Password</button>
+        }}>Update Password</button>
         <p>{message}</p>
 
         {/* Conditionally render based on isAdmin */}

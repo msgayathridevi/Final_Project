@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const nodemailer = require('nodemailer');
 const UserController = require('../controllers/userController');
 const authMiddleware = require('../controllers/authMiddleware');
 

@@ -18,32 +18,17 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   })
   .catch(err => console.error('MongoDB Connection Error:', err));
 
-// Define data to be seeded
-// const userData = [
-//   {
-//     name: 'John Doe',
-//     email: 'd@d.com',
-//     password: 'admin',
-//     role: 'admin',
-//     age: 30,
-//     phoneNumber: '6381969165',
-//     designation: 'Software Engineer',
-//     department: 'Developer'
-//   },
-//   // You can add more seed data here if needed
-// ];
-
-
 const userData = [
   {
-    name: 'Gayathri',
-    email: 'u@u.com',
-    password: 'user',
+    name: 'Aniket Dosss',
+    email: 'dasaniket20002@gmail.com',
+    password: 'aniket',
     role: 'user',
-    age: 22,
-    phoneNumber: '9986452105',
+    age: 32,
+    phoneNumber: '8745214520',
     designation: 'Sr. Software Engineer',
-    department: 'Developer'
+    department: 'Management'
+
   },
   // You can add more seed data here if needed
 ];

@@ -221,7 +221,6 @@ exports.editProject = async (req, res) => {
   }
 };
 
-
 exports.createApprover = async (req, res) => {
   try {
     const { approver, approval, skills } = req.body;
@@ -359,7 +358,6 @@ exports.fetchApprovalSkills = async (req, res) => {
   }
 };
 
-
 exports.updateApprovalStatus = async (req, res) => {
   try {
     const { userId, approval, status } = req.body;
@@ -387,7 +385,6 @@ exports.updateApprovalStatus = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 exports.adminDashboard = async (req, res) => {
   try {
@@ -430,7 +427,6 @@ exports.fetchCertificationDetailAdminDashboard = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 exports.fetchProjectDetailAdminDashboard = async (req, res) => {
   try {

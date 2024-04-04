@@ -10,3 +10,5 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 - remove email id from skills, certi and proejcts
 - display the details for approver with respect to the skills
 - change navigation after logging in
+- storage starts fresh when login and deleted when log out
+- update forget password

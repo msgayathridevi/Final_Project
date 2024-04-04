@@ -8,7 +8,7 @@ const ChangePassword = () => {
     const [password, setPassword] = useState('');
 
     const onFormSubmit = () => {
-        axios.post('http://localhost:5000/user/updatepassword', { password }, { params: { emailID } }, {
+        axios.post('http://localhost:5000/updatepassword', { password }, { params: { emailID } }, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("token"),
             },
@@ -19,6 +19,7 @@ const ChangePassword = () => {
                 }
                 console.log(res.data);
             }).catch(err => {
+                alert('Password not Changed');
                 console.log(err);
             })
     }
@@ -26,7 +27,7 @@ const ChangePassword = () => {
     return (
         <div>
             <header className="App-header">
-                <h1>Change Password</h1>
+                <h1>Update Password</h1>
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     onFormSubmit();
@@ -42,7 +43,7 @@ const ChangePassword = () => {
                             required
                         />
                     </div>
-                    <button type="submit">Change Password</button>
+                    <button type="submit">Update Password</button>
                 </form>
             </header>
         </div>

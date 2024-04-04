@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 console.log("hello");
-const emailRoute = require('./email')
+const emailRoute = require('./routes/email')
 const user = require('./routes/route');
 const express = require('express');
 const mongoose = require('mongoose');
