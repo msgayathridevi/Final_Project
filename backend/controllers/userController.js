@@ -431,3 +431,49 @@ exports.fetchCertificationDetailAdminDashboard = async (req, res) => {
   }
 };
 
+
+exports.fetchProjectDetailAdminDashboard = async (req, res) => {
+  try {
+    const approvalName = req.params.approvalName;
+
+    // Find the user ID based on the approval name
+    const user = await EmployeeModel.findOne({ name: approvalName });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Find the certification details based on the user ID
+    const project = await ProjectModel.findOne({ userId: user._id });
+    
+    // Extract the driveLink from the certification
+    const client = project ? project.client : null;
+
+    res.status(200).json({ client });
+  } catch (error) {
+    console.error('Error fetching project details:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.fetchSkillDetailAdminDashboard = async (req, res) => {
+  try {
+    const approvalName = req.params.approvalName;
+
+    // Find the user ID based on the approval name
+    const user = await EmployeeModel.findOne({ name: approvalName });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Find the certification details based on the user ID
+    const skil = await SkillModel.findOne({ userId: user._id });
+    
+    // Extract the driveLink from the certification
+    const rateYourself = skil ? skil.rateYourself : null;
+
+    res.status(200).json({ rateYourself });
+  } catch (error) {
+    console.error('Error fetching skill details:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

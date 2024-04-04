@@ -26,5 +26,7 @@ router.post('/updateApprovalStatus', authMiddleware, UserController.updateApprov
 
 router.get('/adminDashboard', UserController.adminDashboard);
 router.get('/fetchCertificationDetailAdminDashboard/:approvalName', UserController.fetchCertificationDetailAdminDashboard);
+router.get('/fetchProjectDetailAdminDashboard/:approvalName', UserController.fetchProjectDetailAdminDashboard);
+router.get('/fetchSkillDetailAdminDashboard/:approvalName', UserController.fetchSkillDetailAdminDashboard);
 
 module.exports = router;

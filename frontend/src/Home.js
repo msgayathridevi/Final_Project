@@ -8,6 +8,8 @@ function Home() {
   const [approvers, setApprovers] = useState([]);
   const [filterStatus, setFilterStatus] = useState('All');
   const [certificationDetails, setCertificationDetails] = useState({});
+  const [projectDetails, setProjectDetails] = useState({});
+  const [skillDetails, setSkillDetails] = useState({});
 
   useEffect(() => {
     axios.get('http://localhost:5000/adminDashboard')
@@ -29,14 +31,44 @@ function Home() {
     }
   };
 
+  const fetchProjectDetails = async (approvalName) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/fetchProjectDetailAdminDashboard/${approvalName}`);
+      return response.data.client;
+    } catch (error) {
+      console.error('Error fetching client:', error);
+      return '';
+    }
+  };
+
+  const fetchSkillDetails = async (approvalName) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/fetchSkillDetailAdminDashboard/${approvalName}`);
+      return response.data.rateYourself;
+    } catch (error) {
+      console.error('Error fetching rateYourself:', error);
+      return '';
+    }
+  };
+
   useEffect(() => {
     const fetchDetails = async () => {
-      const details = {};
+      const certi_details = {};
+      const project_details = {};
+      const skill_details = {};
+
       for (const approver of approvers) {
         const driveLink = await fetchCertificationDetails(approver.approval);
-        details[approver.approval] = driveLink;
+        const client = await fetchProjectDetails(approver.approval);
+        const rateYourselfnt = await fetchSkillDetails(approver.approval);
+
+        certi_details[approver.approval] = driveLink;
+        project_details[approver.approval] = client;
+        skill_details[approver.approval] = rateYourselfnt;
       }
-      setCertificationDetails(details);
+      setCertificationDetails(certi_details);
+      setProjectDetails(project_details);
+      setSkillDetails(skill_details);
     };
     fetchDetails();
   }, [approvers]);
@@ -86,9 +118,9 @@ function Home() {
                 <td>{approver.approver}</td>
                 <td>{approver.approval}</td>
                 <td>{approver.skills}</td>
-                <td>{certificationDetails[approver.approval]}</td>
-                <td></td>
-                <td></td>
+                <td>{certificationDetails[approver.approval] || ",,"}</td>
+                <td>{projectDetails[approver.approval] || ",,"}</td>
+                <td>{skillDetails[approver.approval] || ",,"}</td>
                 <td>{approver.status}</td>
               </tr>
             ))}
