@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+// import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Welcome from './Welcome';
 import Home from './Home';
@@ -11,10 +11,15 @@ import EditProject from './EditProject';
 import CreateEmployee from './CreateEmployee';
 import CreateApprover from './CreateApprover';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+// import ScrapperFrontend from  './ScrapperFrontend';
+
 function App() {
   return (
     <Router>
       <Routes>
+        {/* <Route path="/" element={<ScrapperFrontend />} /> */}
         <Route path="/" element={<Welcome />} />
         <Route path="/home" element={<Home />} />
         <Route path="/createemployee" element={<CreateEmployee />} />

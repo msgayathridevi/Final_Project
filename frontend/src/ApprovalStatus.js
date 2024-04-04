@@ -60,46 +60,52 @@ function Approver() {
   };
 
   return (
-    <div>
+    <div className="container">
       <form onSubmit={handleSubmit} >
-        <label htmlFor="approver">Approver:</label>
-        <select id="approver" value={approver} onChange={(e) => setApprover(e.target.value)}>
-          <option value="" disabled>Select Approver</option>
-          {approvers?.map((approver, i) => (
-            <option key={i} value={approver.name}>{approver.name}</option>
-          ))}
-        </select>
+        <div className="form-group">
+          <label htmlFor="approver">Approver:</label>
+          <select className="form-control" id="approver" value={approver} onChange={(e) => setApprover(e.target.value)}>
+            <option value="" disabled>Select Approver</option>
+            {approvers?.map((approver, i) => (
+              <option key={i} value={approver.name}>{approver.name}</option>
+            ))}
+          </select>
+        </div>
 
-        <label htmlFor="approval">Approval:</label>
-        <select id="approval" value={approval} onChange={(e) => setApproval(e.target.value)}>
-          <option value="" disabled>Select Approval</option>
-          {approvals?.map((approval, i) => (
-            <option key={i} value={approval.name}>{approval.name}</option>
-          ))}
-        </select>
+        <div className="form-group">
+          <label htmlFor="approval">Approval:</label>
+          <select className="form-control" id="approval" value={approval} onChange={(e) => setApproval(e.target.value)}>
+            <option value="" disabled>Select Approval</option>
+            {approvals?.map((approval, i) => (
+              <option key={i} value={approval.name}>{approval.name}</option>
+            ))}
+          </select>
+        </div>
 
-        <label htmlFor="skills">Skills:</label>
-        <select id="skills" value={skills} onChange={(e) => setSkills(e.target.value)}>
-          <option value="" disabled>Select Skills</option>
-          {allSkills.map(skills => (
-            <option key={skills} value={skills}>{skills}</option>
-          ))}
-        </select>
+        <div className="form-group">
+          <label htmlFor="skills">Skills:</label>
+          <select className="form-control" id="skills" value={skills} onChange={(e) => setSkills(e.target.value)}>
+            <option value="" disabled>Select Skills</option>
+            {allSkills.map(skills => (
+              <option key={skills} value={skills}>{skills}</option>
+            ))}
+          </select>
+        </div>
 
-        <label htmlFor="status">Status:</label>
-        <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="" disabled>Select Status</option>
-          <option value="approved">Approved</option>
-          <option value="deny">Deny</option>
-          <option value="pending">Pending</option>
-          {/* Add more options as needed */}
-        </select>
+        <div className="form-group">
+          <label htmlFor="status">Status:</label>
+          <select className="form-control" id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option value="" disabled>Select Status</option>
+            <option value="approved">Approved</option>
+            <option value="deny">Deny</option>
+            <option value="pending">Pending</option>
+            {/* Add more options as needed */}
+          </select>
+        </div>
 
-        <button type="submit">Save</button>
+        <button type="submit" className="btn btn-primary">Save</button>
       </form>
-      <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
-
-
+      <button className="btn btn-secondary" onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
     </div>
   );
 }
