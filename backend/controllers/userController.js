@@ -10,7 +10,6 @@ const CertificationModel = require('../models/CertificationSchema');
 const ProjectModel = require('../models/ProjectSchema');
 
 const ApproverModel = require('../models/approverSchema');
-const ApprovalStatusModel = require('../models/approvalStatusSchema');
 
 exports.createEmployee = async (req, res) => {
   try {
@@ -273,40 +272,6 @@ exports.allApprovals = async (req, res) => {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
-
-exports.ApprovalStatus = async (req, res) => {
-  try {
-    const { approver, approval, skills, status } = req.body;
-
-    // Create a new approver document
-    const newApprovalStatus = new ApprovalStatusModel({
-      approver,
-      approval,
-      skills,
-      status
-    });
-
-    // Save the new approver document to the database
-    await newApprovalStatus.save();
-    return res.status(201).json({ message: 'Approval done for an employee' });
-  } catch (error) {
-    console.error('Error approving an employee:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-// exports.isUserApprover = async (req, res) => {
-//   try {
-//     const user = await EmployeeModel.findById(req.params.userId);
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-//     res.status(200).json({ isApprover: user.isApprover });
-//   } catch (error) {
-//     console.error('Error checking user approval status:', error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
 
 exports.fetchuserapprovals = async (req, res) => {
   try {
