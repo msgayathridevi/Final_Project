@@ -98,39 +98,107 @@ exports.updatePassword = async (req, res) => {
   }
 };
 
+// exports.editSkill = async (req, res) => {
+//   try {
+//     const {skillMode, skills, rateYourself, driveLink } = req.body;
+//     const userId = req.params.userId;
+//     // console.log("userID in cbackend : "+ userId);
+
+//     // Check if the skill exists
+//     let existingSkill = await SkillModel.findOne({ userId });
+
+//     if (!existingSkill) {
+//       // If skill does not exist, create a new one
+//       existingSkill = new SkillModel({
+//         userId,
+//         skillMode,
+//         skills,
+//         rateYourself,
+//         driveLink
+//       });
+//     } else {
+//       // If skill exists, update it with the new data
+//       existingSkill.skillMode = skillMode;
+//       existingSkill.skills = skills;
+//       existingSkill.rateYourself = rateYourself;
+//       existingSkill.driveLink = driveLink;
+//     }
+
+//     // Save the skill to the database
+//     await existingSkill.save();
+
+//     return res.status(200).json({ message: 'Skill updated successfully' });
+//   } catch (error) {
+//     console.error('Error updating skill:', error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
+
 exports.editSkill = async (req, res) => {
   try {
-    const { email, skillMode, skills, rateYourself, driveLink } = req.body;
+    const { skillMode, skills, rateYourself, driveLink } = req.body;
     const userId = req.params.userId;
-    // console.log("userID in cbackend : "+ userId);
-
-    // Check if the skill exists
+    
     let existingSkill = await SkillModel.findOne({ userId });
 
-    if (!existingSkill) {
-      // If skill does not exist, create a new one
-      existingSkill = new SkillModel({
-        email,
-        userId,
-        skillMode,
-        skills,
-        rateYourself,
-        driveLink
-      });
-    } else {
-      // If skill exists, update it with the new data
+    if (existingSkill) {
       existingSkill.skillMode = skillMode;
       existingSkill.skills = skills;
       existingSkill.rateYourself = rateYourself;
       existingSkill.driveLink = driveLink;
+      
+      await existingSkill.save();
+      
+      return res.status(200).json({ message: 'Skill updated successfully' });
+    } else {
+      return res.status(404).json({ message: 'Skill not found' });
     }
-
-    // Save the skill to the database
-    await existingSkill.save();
-
-    return res.status(200).json({ message: 'Skill updated successfully' });
   } catch (error) {
     console.error('Error updating skill:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.addSkill = async (req, res) => {
+  try {
+    const { skillMode, skills, rateYourself, driveLink } = req.body;
+    const userId = req.params.userId;
+    
+    const newSkill = new SkillModel({
+      userId,
+      skillMode,
+      skills,
+      rateYourself,
+      driveLink
+    });
+
+    await newSkill.save();
+    
+    return res.status(200).json({ message: 'Skill added successfully' });
+  } catch (error) {
+    console.error('Error adding skill:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.deleteSkill = async (req, res) => {
+  try {
+    const { skillMode, skills, rateYourself, driveLink } = req.body;
+    const userId = req.params.userId;
+
+    // Check if the skill exists
+    const deletedSkill = await SkillModel.findOneAndDelete({ 
+      userId, skillMode, skills, rateYourself, driveLink 
+    });
+
+    // If skill does not exist, return an error response
+    if (!deletedSkill) {
+      return res.status(404).json({ message: 'Skill not found' });
+    }
+
+    return res.status(200).json({ message: 'Skill deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting skill:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

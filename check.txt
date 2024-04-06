@@ -13,3 +13,4 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 - storage starts fresh when login and deleted when log out
 - update forget password
 - https://evnxdhk38io.typeform.com/to/VaBH7lwk
+- formik for login and validation

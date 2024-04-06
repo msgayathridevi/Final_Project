@@ -9,7 +9,10 @@ router.post('/login', UserController.authenticateUser);
 router.post('/createemployee', authMiddleware, UserController.createEmployee);
 router.post('/updatepassword', authMiddleware, UserController.updatePassword);
 
-router.post('/editSkill/:userId', authMiddleware, UserController.editSkill);
+router.post('/addSkill/:userId', UserController.addSkill);
+router.post('/editSkill/:userId', UserController.editSkill);
+router.post('/deleteSkill/:userId', UserController.deleteSkill);
+
 router.post('/editCertification/:userId', authMiddleware, UserController.editCertification);
 router.post('/editProject/:userId', authMiddleware, UserController.editProject);
 

@@ -27,6 +27,7 @@ function App() {
 
         <Route path="/userhomepage/:userId" element={<UserHomePage />} />
         <Route path="/editSkill/:userId" element={<EditSkill />} />
+        
         <Route path="/editCertification/:userId" element={<EditCertification />} />
         <Route path="/editProject/:userId" element={<EditProject />} />
         <Route path="/createapprover/" element={<CreateApprover />} />
