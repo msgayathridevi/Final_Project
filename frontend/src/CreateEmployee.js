@@ -132,8 +132,12 @@ function CreateEmployee() {
               <option value="">Select Designation</option>
               <option value="Software Engineer">Software Engineer</option>
               <option value="Sr. Software Engineer">Sr. Software Engineer</option>
-              <option value="Solution Enabler">Solution Enabler</option>
-              <option value="Consultant">Consultant</option>
+              <option value="Technology Solution Enabler">Technology Solution Enabler</option>
+              <option value="Technology Solution Consultant">Technology Solution Consultant</option>
+              <option value="Technology Solution Architect">Technology Solution Architect</option>
+              <option value="Project Manager">Project Manager</option>
+              <option value="Functional Head">Functional Head</option>
+              <option value="Deivery Head">Deivery Head</option>
             </select>
           </div>
           <div className="form-group">
@@ -146,13 +150,18 @@ function CreateEmployee() {
               required
             >
               <option value="">Select Department</option>
-              <option value="Developer">Developer</option>
-              <option value="Quality Analyst">Quality Analyst</option>
+              <option value="Delivery">Delivery</option>
+              <option value="Finance">Finance</option>
+              <option value="Support">Support</option>
+              <option value="Quality">Quality</option>
+              <option value="Technology">Technology</option>
               <option value="HR">HR</option>
-              <option value="Financial Team">Financial Team</option>
-              <option value="Management">Management</option>
+              <option value="IT">IT</option>
+              <option value="Talent Acquisition">Talent Acquisition</option>
+              <option value="Talent Management">Talent Management</option>
             </select>
           </div>
+
           <button type="submit">Create User</button>
         </form>
       </header>
