@@ -1,6 +1,4 @@
-const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-
 const jwt = require("jsonwebtoken");
 
 const EmployeeModel = require('../models/employeeSchema');
@@ -10,6 +8,36 @@ const CertificationModel = require('../models/CertificationSchema');
 const ProjectModel = require('../models/ProjectSchema');
 
 const ApproverModel = require('../models/approverSchema');
+
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const emailID = req.query.emailID;
+    const { password } = req.body;
+      
+    // console.log("*********************")
+    // console.log(emailID);
+    // console.log(password);
+
+    const hash = crypto.createHash('sha256');
+    hash.update(password);
+    const password_hash = hash.digest('hex');
+
+    const user = await EmployeeModel.findOne({ email: emailID });
+    if (!user)
+      return res.status(202).send('User not found');
+    // console.log(user);
+
+    user.password = password_hash;
+    await user.save();
+
+    return res.status(200).send('Password Successfuly Updated');
+  } catch (err) {
+    return res.status(500).send('Internal Error');
+  }
+};
+
+
 
 exports.createEmployee = async (req, res) => {
   try {
@@ -73,66 +101,6 @@ function hashPassword(password) {
   hash.update(password);
   return hash.digest('hex');
 }
-
-exports.updatePassword = async (req, res) => {
-  try {
-    const emailID = req.query.emailID;
-    const { password } = req.body;
-
-
-    const hash = crypto.createHash('sha256');
-    hash.update(password);
-    const password_hash = hash.digest('hex');
-
-    const user = await EmployeeModel.findOne({ email: emailID });
-    if (!user)
-      return res.status(202).send('User not found');
-    // console.log(user);
-
-    user.password = password_hash;
-    await user.save();
-
-    return res.status(200).send('Password Successfuly Updated');
-  } catch (err) {
-    return res.status(500).send('Internal Error');
-  }
-};
-
-// exports.editSkill = async (req, res) => {
-//   try {
-//     const {skillMode, skills, rateYourself, driveLink } = req.body;
-//     const userId = req.params.userId;
-//     // console.log("userID in cbackend : "+ userId);
-
-//     // Check if the skill exists
-//     let existingSkill = await SkillModel.findOne({ userId });
-
-//     if (!existingSkill) {
-//       // If skill does not exist, create a new one
-//       existingSkill = new SkillModel({
-//         userId,
-//         skillMode,
-//         skills,
-//         rateYourself,
-//         driveLink
-//       });
-//     } else {
-//       // If skill exists, update it with the new data
-//       existingSkill.skillMode = skillMode;
-//       existingSkill.skills = skills;
-//       existingSkill.rateYourself = rateYourself;
-//       existingSkill.driveLink = driveLink;
-//     }
-
-//     // Save the skill to the database
-//     await existingSkill.save();
-
-//     return res.status(200).json({ message: 'Skill updated successfully' });
-//   } catch (error) {
-//     console.error('Error updating skill:', error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
 
 exports.editSkill = async (req, res) => {
   try {

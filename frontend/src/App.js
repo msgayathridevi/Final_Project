@@ -12,7 +12,6 @@ import CreateEmployee from './CreateEmployee';
 import CreateApprover from './CreateApprover';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 // import ScrapperFrontend from  './ScrapperFrontend';
 
 function App() {

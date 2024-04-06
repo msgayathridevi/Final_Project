@@ -108,7 +108,7 @@ function Welcome() {
         <button onClick={(e) => {
           e.preventDefault();
           onChangePasswordClicked();
-        }}>Update Password</button>
+        }}>Change Password</button>
         <p>{message}</p>
 
         {/* Conditionally render based on isAdmin */}
