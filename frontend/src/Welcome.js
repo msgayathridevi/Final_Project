@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Form, Button, Alert, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import './welcome.css';
 
 function Welcome() {
   localStorage.clear();
@@ -12,7 +12,6 @@ function Welcome() {
     password: '',
   });
   const [message, setMessage] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false); // State variable to track admin status
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,17 +36,13 @@ function Welcome() {
 
       const resp = await response.json();
       localStorage.setItem("token", resp.token)
-      // console.log(resp.token);
 
       if (resp.success && resp.data.role === 'admin') {
-        setIsAdmin(true); // Set isAdmin to true if the user is an admin
         setMessage('Login successful!');
         navigate("/home");
       } else {
-        setIsAdmin(false); // Set isAdmin to false if the user is not an admin
         setMessage(resp.message);
         navigate(`/userhomepage/${resp.data._id}`);
-        // alert(resp.data._id);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -76,50 +71,38 @@ function Welcome() {
   
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome</h1>
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={credentials.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={credentials.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button type="submit">Login</button>
-        </form>
+    <Container>
+      <Row className="justify-content-md-center">
+        <Col xs={12} md={6}>
+          <h1 className="text-center">Welcome</h1>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" name="email" value={credentials.email} onChange={handleChange} required />
+            </Form.Group>
 
-        <button onClick={(e) => {
-          e.preventDefault();
-          onChangePasswordClicked();
-        }}>Change Password</button>
-        <p>{message}</p>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" name="password" value={credentials.password} onChange={handleChange} required />
+            </Form.Group>
 
-        {/* Conditionally render based on isAdmin */}
-        {isAdmin ? (
-          <button onClick={() => navigate("/createemployee")}>Create User</button>
-        ) : (
-          <h1>Only admin</h1>
-        )}
+            <Button variant="primary" type="submit" block>
+              Login
+            </Button>
+          </Form>
 
-      </header>
-    </div>
+          <Button variant="secondary" onClick={(e) => {
+            e.preventDefault();
+            onChangePasswordClicked();
+          }} block>
+            Change Password
+          </Button>
+          
+          {message && <Alert variant="danger">{message}</Alert>}
+          
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

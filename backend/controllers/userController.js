@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const jwt = require("jsonwebtoken");
+const axios = require('axios'); 
 
 const EmployeeModel = require('../models/employeeSchema');
 
@@ -352,7 +353,7 @@ exports.deleteProject = async (req, res) => {
     const userId = req.params.userId;
 
     // Check if the project exists
-    const deletedProject = await ProjectModel.findOneAndDelete({ userId,projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client });
+    const deletedProject = await ProjectModel.findOneAndDelete({ userId, projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client });
 
     // If project does not exist, return an error response
     if (!deletedProject) {
@@ -403,14 +404,12 @@ exports.createApprover = async (req, res) => {
       return res.status(202).json({ message: 'The designated approver does not have the authority to approve.' });
     }
 
-    // Create a new approver document
     const newApprover = new ApproverModel({
       approver,
       approval,
       skills
     });
 
-    // Save the new approver document to the database
     approverDetails.isApprover = true;
     await newApprover.save();
     await approverDetails.save();
@@ -418,7 +417,6 @@ exports.createApprover = async (req, res) => {
     await axios.get('http://localhost:5000/sendMailApproverCreated', {
       params: { requestingEmail: approverDetails.email }
     });
-
     return res.status(201).json({ message: 'Approver created successfully' });
   } catch (error) {
     console.error('Error creating approver:', error);
