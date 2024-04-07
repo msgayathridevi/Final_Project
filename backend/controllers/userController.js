@@ -171,47 +171,121 @@ exports.deleteSkill = async (req, res) => {
   }
 };
 
-exports.editCertification = async (req, res) => {
+// exports.editCertification = async (req, res) => {
+//   try {
+//     const { email, credentialsID, driveLink, organization, expireDate, issueDate, durationInWeeks, skills } = req.body;
+//     const userId = req.params.userId;
+
+//     // Check if the certification exists
+//     let existingCertification = await CertificationModel.findOne({ userId });
+
+//     if (!existingCertification) {
+//       // If certification does not exist, create a new one
+//       existingCertification = new CertificationModel({
+//         email,
+//         userId,
+//         credentialsID,
+//         driveLink,
+//         organization,
+//         expireDate,
+//         issueDate,
+//         durationInWeeks,
+//         skills
+//       });
+//     } else {
+//       // If certification exists, update it with the new data
+//       existingCertification.credentialsID = credentialsID;
+//       existingCertification.driveLink = driveLink;
+//       existingCertification.organization = organization;
+//       existingCertification.expireDate = expireDate;
+//       existingCertification.issueDate = issueDate;
+//       existingCertification.durationInWeeks = durationInWeeks;
+//       existingCertification.skills = skills;
+//     }
+
+//     // Save the certification to the database
+//     await existingCertification.save();
+
+//     return res.status(200).json({ message: 'Certification updated successfully' });
+//   } catch (error) {
+//     console.error('Error updating certification:', error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
+
+exports.addCertification = async (req, res) => {
   try {
-    const { email, credentialsID, driveLink, organization, expireDate, issueDate, durationInWeeks, skills } = req.body;
+    const { driveLink, organization, expireDate, issueDate, durationInWeeks, skills } = req.body;
     const userId = req.params.userId;
 
-    // Check if the certification exists
+    const newCertification = new CertificationModel({
+      userId,
+      driveLink,
+      organization,
+      expireDate,
+      issueDate,
+      durationInWeeks,
+      skills
+    });
+
+    await newCertification.save();
+
+    return res.status(200).json({ message: 'Certification added successfully' });
+  } catch (error) {
+    console.error('Error adding certification:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.editCertification = async (req, res) => {
+  try {
+    const { driveLink, organization, expireDate, issueDate, durationInWeeks, skills } = req.body;
+    const userId = req.params.userId;
+
     let existingCertification = await CertificationModel.findOne({ userId });
 
-    if (!existingCertification) {
-      // If certification does not exist, create a new one
-      existingCertification = new CertificationModel({
-        email,
-        userId,
-        credentialsID,
-        driveLink,
-        organization,
-        expireDate,
-        issueDate,
-        durationInWeeks,
-        skills
-      });
-    } else {
+    if (existingCertification) {
       // If certification exists, update it with the new data
-      existingCertification.credentialsID = credentialsID;
       existingCertification.driveLink = driveLink;
       existingCertification.organization = organization;
       existingCertification.expireDate = expireDate;
       existingCertification.issueDate = issueDate;
       existingCertification.durationInWeeks = durationInWeeks;
       existingCertification.skills = skills;
+
+      // Save the certification to the database
+      await existingCertification.save();
+
+      return res.status(200).json({ message: 'Certification updated successfully' });
+    } else {
+      return res.status(404).json({ message: 'Certification not found' });
     }
-
-    // Save the certification to the database
-    await existingCertification.save();
-
-    return res.status(200).json({ message: 'Certification updated successfully' });
   } catch (error) {
     console.error('Error updating certification:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+exports.deleteCertification = async (req, res) => {
+  try {
+    const { driveLink, organization, expireDate, issueDate, durationInWeeks, skills } = req.body;
+    const userId = req.params.userId;
+
+    // Check if the certification exists
+    const deletedCertification = await CertificationModel.findOneAndDelete({ userId, driveLink, organization, expireDate, issueDate, durationInWeeks, skills });
+
+    // If certification does not exist, return an error response
+    if (!deletedCertification) {
+      return res.status(404).json({ message: 'Certification not found' });
+    }
+
+    return res.status(200).json({ message: 'Certification deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting certification:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 exports.addProject = async (req, res) => {
   try {
@@ -291,50 +365,6 @@ exports.deleteProject = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-
-// exports.editProject = async (req, res) => {
-//   try {
-//     const { email, projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client } = req.body;
-//     const userId = req.params.userId;
-
-//     let existingProject = await ProjectModel.findOne({ userId });
-
-//     if (!existingProject) {
-//       // If project does not exist, create a new one
-//       existingProject = new ProjectModel({
-//         userId,
-//         projectName,
-//         years,
-//         startDate,
-//         endDate,
-//         projectDescription,
-//         skillsGained,
-//         mentor,
-//         client
-//       });
-//     } else {
-//       // If project exists, update it with the new data
-//       existingProject.projectName = projectName;
-//       existingProject.years = years;
-//       existingProject.startDate = startDate;
-//       existingProject.endDate = endDate;
-//       existingProject.projectDescription = projectDescription;
-//       existingProject.skillsGained = skillsGained;
-//       existingProject.mentor = mentor;
-//       existingProject.client = client;
-//     }
-
-//     // Save the project to the database
-//     await existingProject.save();
-
-//     return res.status(200).json({ message: 'Project updated successfully' });
-//   } catch (error) {
-//     console.error('Error updating project:', error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
-
 
 const designationHierarchy = {
   'Software Engineer': [],

@@ -4,40 +4,84 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 const EditCertification = () => {
-    const [email, setEmail] = useState('');
     const [driveLink, setDriveLink] = useState('');
     const [organization, setOrganization] = useState('');
     const [expireDate, setExpireDate] = useState('');
     const [issueDate, setIssueDate] = useState('');
     const [durationInWeeks, setDurationInWeeks] = useState(0);
     const [skills, setSkills] = useState('');
+
     const navigate = useNavigate();
     const { userId } = useParams();
 
-    const onFormSubmit = () => {
-        const updatedCertification = {
-            email,
-            driveLink,
-            organization,
-            expireDate,
-            issueDate,
-            durationInWeeks,
-            skills
-        };
+    const resetForm = () => {
+        setDriveLink('');
+        setOrganization('');
+        setExpireDate('');
+        setIssueDate('');
+        setDurationInWeeks(0);
+        setSkills('');
+    };
 
-        axios.post(`http://localhost:5000/editCertification/${userId}`, updatedCertification, {
-            headers:{
-               Authorization:"Bearer "+localStorage.getItem("token"),
-             },
-           })
+    const fetchedCertification = {
+        driveLink, organization, expireDate,
+        issueDate, durationInWeeks, skills
+    };
+    const onAddCertification = () => {
+        axios.post(`http://localhost:5000/addCertification/${userId}`, fetchedCertification, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        })
             .then((res) => {
                 if (res.status === 200) {
-                    alert('Certification updated successfully' + userId);
+                    alert('Certification added successfully');
+                    resetForm(); // Reset form fields
+                    navigate(`/editCertification/${userId}`);
                 }
-                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
+                alert('Certification not added successfully');
+            });
+    };
+
+    const onEditCertification = () => {
+        axios.post(`http://localhost:5000/editCertification/${userId}`, fetchedCertification, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    alert('Certification updated successfully');
+                    resetForm(); // Reset form fields
+                    navigate(`/editCertification/${userId}`);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('Certification not updated successfully');
+            });
+    };
+
+    const onDeleteCertification = () => {
+        // Send request to delete certification to the backend
+        axios.post(`http://localhost:5000/deleteCertification/${userId}`, fetchedCertification, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    alert('Certification deleted successfully');
+                    resetForm(); // Reset form fields
+                    navigate(`/editCertification/${userId}`);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('Certification not deleted successfully');
             });
     };
 
@@ -47,19 +91,9 @@ const EditCertification = () => {
                 <h1>Edit Certification</h1>
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    onFormSubmit();
+                    onEditCertification();
                 }} className="certification-form">
-                    <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
+
                     <div className="form-group">
                         <label htmlFor="driveLink">Drive Link:</label>
                         <input
@@ -126,23 +160,20 @@ const EditCertification = () => {
                                 required
                             >
                                 <option value="">Select Skill</option>
-                                <option value="python">Python</option>
-                                <option value="Advanced python">Advanced Python</option>
-                                <option value="cloud">Cloud</option>
-                                <option value="dbt">DBT</option>
-                                <option value="Full Stack">Full Stack</option>
-                                <option value="powerBI">PowerBI</option>
-                                <option value="tableau">Tableau</option>
-                                <option value="Redux">Redux</option>
-                                <option value="JWT">JWT</option>
+                                {['ADF', 'Alteryx', 'Angular', 'AWS', 'AWS Lambda', 'PHP', 'Power BI', 'Presenting', 'Project Mgmt', 'Python', 'React', 'React Native', 'Slides', 'Snowflake'].map(skill => (
+                                    <option key={skill} value={skill}>{skill}</option>
+                                ))}
                             </select>
                         </div>
 
                     </div>
-                    <button type="submit">Update Certification</button>
-                </form>F
+                    <button type="button" onClick={onAddCertification}>Add Certification</button>
+                    <button type="button" onClick={onEditCertification}>Update Certification</button>
+                    <button type="button" onClick={onDeleteCertification}>Delete Certification</button>
+
+                </form>
             </header>
-      <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
+            <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>
 
         </div>
     );

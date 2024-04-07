@@ -16,8 +16,9 @@ router.post('/addProject/:userId', UserController.addProject);
 router.post('/editProject/:userId', UserController.editProject);
 router.post('/deleteProject/:userId', UserController.deleteProject);
 
-router.post('/editCertification/:userId', authMiddleware, UserController.editCertification);
-router.post('/editProject/:userId', authMiddleware, UserController.editProject);
+router.post('/addCertification/:userId', UserController.addCertification);
+router.post('/editCertification/:userId', UserController.editCertification);
+router.post('/deleteCertification/:userId', UserController.deleteCertification);
 
 router.post('/createapprover', authMiddleware, UserController.createApprover);
 router.get('/approvers', UserController.allApprovers);
