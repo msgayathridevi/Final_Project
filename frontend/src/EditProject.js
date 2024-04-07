@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 const EditProject = () => {
-    const [email, setEmail] = useState('');
     const [projectName, setProjectName] = useState('');
     const [years, setYears] = useState(0);
     const [startDate, setStartDate] = useState('');
@@ -18,32 +17,78 @@ const EditProject = () => {
     const navigate = useNavigate();
     const { userId } = useParams();
 
-    const onFormSubmit = () => {
-        const updatedProject = {
-            email,
-            projectName,
-            years,
-            startDate,
-            endDate,
-            projectDescription,
-            skillsGained,
-            mentor,
-            client
-        };
+    const resetForm = () => {
+        setProjectName('');
+        setYears(0);
+        setStartDate('');
+        setEndDate('');
+        setProjectDescription('');
+        setSkillsGained('');
+        setMentor('');
+        setClient('');
+    };
+    
 
-        axios.post(`http://localhost:5000/editProject/${userId}`, updatedProject, {
+    const fetchedSkills = {
+        projectName, years, startDate, endDate, projectDescription,
+        skillsGained, mentor, client
+    };
+
+    const onAddProject = () => {
+        axios.post(`http://localhost:5000/addProject/${userId}`, fetchedSkills, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("token"),
             },
         })
             .then((res) => {
                 if (res.status === 200) {
-                    alert('Project updated successfully' + userId);
+                    alert('Project added successfully');
+                    resetForm(); // Reset form fields
+                    navigate(`/editProject/${userId}`);
                 }
-                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
+                alert('Project not added successfully');
+            });
+    };
+
+    const onEditProject = () => {
+        axios.post(`http://localhost:5000/editProject/${userId}`, fetchedSkills, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    alert('Project updated successfully');
+                    resetForm(); // Reset form fields
+                    navigate(`/editProject/${userId}`);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('Project not updated successfully');
+            });
+    };
+
+    const onDeleteProject = () => {
+        // Send request to delete skill to the backend
+        axios.post(`http://localhost:5000/deleteProject/${userId}`, fetchedSkills, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    alert('Project deleted successfully');
+                    resetForm(); // Reset form fields
+                    navigate(`/editProject/${userId}`);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('Project not deleted successfully');
             });
     };
 
@@ -53,19 +98,8 @@ const EditProject = () => {
                 <h1>Edit Project</h1>
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    onFormSubmit();
+                    onEditProject();
                 }} className="project-form">
-                    <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
                     <div className="form-group">
                         <label htmlFor="projectName">Project Name:</label>
                         <input
@@ -130,16 +164,10 @@ const EditProject = () => {
                                 onChange={(e) => setSkillsGained(e.target.value)}
                                 required
                             >
-                                <option value="">Select Skills Gained</option>
-                                <option value="python">Python</option>
-                                <option value="Advanced python">Advanced Python</option>
-                                <option value="cloud">Cloud</option>
-                                <option value="dbt">DBT</option>
-                                <option value="Full Stack">Full Stack</option>
-                                <option value="powerBI">PowerBI</option>
-                                <option value="tableau">Tableau</option>
-                                <option value="Redux">Redux</option>
-                                <option value="JWT">JWT</option>
+                                <option value="">Select Skill</option>
+                                {['ADF', 'Alteryx', 'Angular', 'AWS', 'AWS Lambda', 'PHP', 'Power BI', 'Presenting', 'Project Mgmt', 'Python', 'React', 'React Native', 'Slides', 'Snowflake'].map(skill => (
+                                    <option key={skill} value={skill}>{skill}</option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -165,7 +193,9 @@ const EditProject = () => {
                             required
                         />
                     </div>
-                    <button type="submit">Update Project</button>
+                    <button type="button" onClick={onAddProject}>Add Project</button>
+                    <button type="button" onClick={onEditProject}>Update Project</button>
+                    <button type="button" onClick={onDeleteProject}>Delete Project</button>
                 </form>
             </header>
             <button onClick={() => { localStorage.clear(); navigate('/') }}>Logout</button>

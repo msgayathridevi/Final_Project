@@ -52,6 +52,8 @@ function CreateApprover() {
 
       if (response.status === 201) {
         alert('New Approver created successfully');
+      } else if (response.status === 202) { 
+        alert(response.data.message);
       } else {
         alert('New Approver creation failed');
       }

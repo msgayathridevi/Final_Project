@@ -9,31 +9,8 @@ const EditSkill = () => {
     const [rateYourself, setRateYourself] = useState(0);
     const [driveLink, setDriveLink] = useState('');
 
-
     const navigate = useNavigate();
     const { userId } = useParams();
-    // console.log('userId: in editskills', userId);
-
-    // const onFormSubmit = () => {
-    //     // Send updated skill data to the backend
-    //     const updatedSkill = { skillMode, skills, rateYourself, driveLink };
-    //     axios.post(`http://localhost:5000/editSkill/${userId}`, updatedSkill, {
-    //         headers: {
-    //             Authorization: "Bearer " + localStorage.getItem("token"),
-    //         },
-    //     })
-
-    //         .then((res) => {
-    //             if (res.status === 200) {
-    //                 alert('Skill updated successfully' + userId);
-    //             }
-    //             // console.log(res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //             alert('Skill not updated successfully');
-    //         });
-    // };
 
     const resetForm = () => {
         setSkillMode('');

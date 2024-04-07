@@ -6,18 +6,22 @@ const authMiddleware = require('../controllers/authMiddleware');
 router.post('/login', UserController.authenticateUser);
 router.post('/createemployee', authMiddleware, UserController.createEmployee);
 
-// router.post('/updatepassword', UserController.updatePassword);
+router.post('/updatepassword', UserController.updatePassword);
 
 router.post('/addSkill/:userId', UserController.addSkill);
 router.post('/editSkill/:userId', UserController.editSkill);
 router.post('/deleteSkill/:userId', UserController.deleteSkill);
 
+router.post('/addProject/:userId', UserController.addProject);
+router.post('/editProject/:userId', UserController.editProject);
+router.post('/deleteProject/:userId', UserController.deleteProject);
+
 router.post('/editCertification/:userId', authMiddleware, UserController.editCertification);
 router.post('/editProject/:userId', authMiddleware, UserController.editProject);
 
 router.post('/createapprover', authMiddleware, UserController.createApprover);
-router.get('/approvers', authMiddleware, UserController.allApprovers);
-router.get('/approvals', authMiddleware, UserController.allApprovals);
+router.get('/approvers', UserController.allApprovers);
+router.get('/approvals', UserController.allApprovals);
 
 router.get('/fetchuserapprovals/:userId', UserController.fetchuserapprovals);
 router.post('/fetchApprovalSkills', authMiddleware, UserController.fetchApprovalSkills);

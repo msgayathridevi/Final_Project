@@ -14,7 +14,7 @@ exports.updatePassword = async (req, res) => {
   try {
     const emailID = req.query.emailID;
     const { password } = req.body;
-      
+
     // console.log("*********************")
     // console.log(emailID);
     // console.log(password);
@@ -106,7 +106,7 @@ exports.editSkill = async (req, res) => {
   try {
     const { skillMode, skills, rateYourself, driveLink } = req.body;
     const userId = req.params.userId;
-    
+
     let existingSkill = await SkillModel.findOne({ userId });
 
     if (existingSkill) {
@@ -114,9 +114,9 @@ exports.editSkill = async (req, res) => {
       existingSkill.skills = skills;
       existingSkill.rateYourself = rateYourself;
       existingSkill.driveLink = driveLink;
-      
+
       await existingSkill.save();
-      
+
       return res.status(200).json({ message: 'Skill updated successfully' });
     } else {
       return res.status(404).json({ message: 'Skill not found' });
@@ -131,7 +131,7 @@ exports.addSkill = async (req, res) => {
   try {
     const { skillMode, skills, rateYourself, driveLink } = req.body;
     const userId = req.params.userId;
-    
+
     const newSkill = new SkillModel({
       userId,
       skillMode,
@@ -141,7 +141,7 @@ exports.addSkill = async (req, res) => {
     });
 
     await newSkill.save();
-    
+
     return res.status(200).json({ message: 'Skill added successfully' });
   } catch (error) {
     console.error('Error adding skill:', error);
@@ -155,8 +155,8 @@ exports.deleteSkill = async (req, res) => {
     const userId = req.params.userId;
 
     // Check if the skill exists
-    const deletedSkill = await SkillModel.findOneAndDelete({ 
-      userId, skillMode, skills, rateYourself, driveLink 
+    const deletedSkill = await SkillModel.findOneAndDelete({
+      userId, skillMode, skills, rateYourself, driveLink
     });
 
     // If skill does not exist, return an error response
@@ -213,28 +213,40 @@ exports.editCertification = async (req, res) => {
   }
 };
 
+exports.addProject = async (req, res) => {
+  try {
+    const { projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client } = req.body;
+    const userId = req.params.userId;
+
+    const newProject = new ProjectModel({
+      userId,
+      projectName,
+      years,
+      startDate,
+      endDate,
+      projectDescription,
+      skillsGained,
+      mentor,
+      client
+    });
+
+    await newProject.save();
+
+    return res.status(200).json({ message: 'Project added successfully' });
+  } catch (error) {
+    console.error('Error adding project:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 exports.editProject = async (req, res) => {
   try {
-    const { email, projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client } = req.body;
+    const { projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client } = req.body;
     const userId = req.params.userId;
 
     let existingProject = await ProjectModel.findOne({ userId });
 
-    if (!existingProject) {
-      // If project does not exist, create a new one
-      existingProject = new ProjectModel({
-        email,
-        userId,
-        projectName,
-        years,
-        startDate,
-        endDate,
-        projectDescription,
-        skillsGained,
-        mentor,
-        client
-      });
-    } else {
+    if (existingProject) {
       // If project exists, update it with the new data
       existingProject.projectName = projectName;
       existingProject.years = years;
@@ -244,29 +256,121 @@ exports.editProject = async (req, res) => {
       existingProject.skillsGained = skillsGained;
       existingProject.mentor = mentor;
       existingProject.client = client;
+
+
+      // Save the project to the database
+      await existingProject.save();
+
+      return res.status(200).json({ message: 'Project updated successfully' });
+    } else {
+      return res.status(404).json({ message: 'Skill not found' });
     }
 
-    // Save the project to the database
-    await existingProject.save();
-
-    return res.status(200).json({ message: 'Project updated successfully' });
   } catch (error) {
     console.error('Error updating project:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
 
+exports.deleteProject = async (req, res) => {
+  try {
+    const { projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client } = req.body;
+    const userId = req.params.userId;
+
+    // Check if the project exists
+    const deletedProject = await ProjectModel.findOneAndDelete({ userId,projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client });
+
+    // If project does not exist, return an error response
+    if (!deletedProject) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    return res.status(200).json({ message: 'Project deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting project:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+// exports.editProject = async (req, res) => {
+//   try {
+//     const { email, projectName, years, startDate, endDate, projectDescription, skillsGained, mentor, client } = req.body;
+//     const userId = req.params.userId;
+
+//     let existingProject = await ProjectModel.findOne({ userId });
+
+//     if (!existingProject) {
+//       // If project does not exist, create a new one
+//       existingProject = new ProjectModel({
+//         userId,
+//         projectName,
+//         years,
+//         startDate,
+//         endDate,
+//         projectDescription,
+//         skillsGained,
+//         mentor,
+//         client
+//       });
+//     } else {
+//       // If project exists, update it with the new data
+//       existingProject.projectName = projectName;
+//       existingProject.years = years;
+//       existingProject.startDate = startDate;
+//       existingProject.endDate = endDate;
+//       existingProject.projectDescription = projectDescription;
+//       existingProject.skillsGained = skillsGained;
+//       existingProject.mentor = mentor;
+//       existingProject.client = client;
+//     }
+
+//     // Save the project to the database
+//     await existingProject.save();
+
+//     return res.status(200).json({ message: 'Project updated successfully' });
+//   } catch (error) {
+//     console.error('Error updating project:', error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
+
+
+const designationHierarchy = {
+  'Software Engineer': [],
+  'Sr. Software Engineer': ['Software Engineer'],
+  'Technology Solution Enabler': ['Sr. Software Engineer', 'Software Engineer'],
+  'Technology Solution Consultant': ['Technology Solution Enabler', 'Sr. Software Engineer', 'Software Engineer'],
+  'Technology Solution Architect': ['Technology Solution Consultant', 'Technology Solution Enabler', 'Sr. Software Engineer', 'Software Engineer'],
+  'Project Manager': ['Technology Solution Architect', 'Technology Solution Consultant', 'Technology Solution Enabler', 'Sr. Software Engineer', 'Software Engineer'],
+  'Functional Head': ['Project Manager', 'Technology Solution Architect', 'Technology Solution Consultant', 'Technology Solution Enabler', 'Sr. Software Engineer', 'Software Engineer'],
+  'Delivery Head': ['Functional Head', 'Project Manager', 'Technology Solution Architect', 'Technology Solution Consultant', 'Technology Solution Enabler', 'Sr. Software Engineer', 'Software Engineer'],
+};
+
+function canApprove(approverDesignation, requesterDesignation) {
+  const approverTags = designationHierarchy[approverDesignation];
+  console.log("approverTags" + approverTags)
+  const requesterTags = designationHierarchy[requesterDesignation];
+
+  console.log("***********" + approverTags.some(tag => requesterTags.includes(tag)));
+  // Check if the approver has a tag that matches or is higher in the hierarchy than the requester's tag
+  return approverTags.some(tag => requesterTags.includes(tag));
+}
+
 exports.createApprover = async (req, res) => {
   try {
     const { approver, approval, skills } = req.body;
-    // console.log(approver);    
 
-    const existingEmployee = await EmployeeModel.findOne({ name: approver });
-    // console.log("Existing employee: ", existingEmployee);
+    const approverDetails = await EmployeeModel.findOne({ name: approver });
+    const approvalDetails = await EmployeeModel.findOne({ name: approval });
 
-    if (!existingEmployee) {
-      // console.log("Approver not found in employee records");
+    if (!approverDetails) {
       return res.status(404).json({ message: 'Approver not found in employee records' });
+    }
+
+    console.log("approverDetails.designation, approvalDetails.designation" + approverDetails.designation + approvalDetails.designation)
+    if (!canApprove(approverDetails.designation, approvalDetails.designation)) {
+      return res.status(202).json({ message: 'The designated approver does not have the authority to approve.' });
     }
 
     // Create a new approver document
@@ -277,11 +381,14 @@ exports.createApprover = async (req, res) => {
     });
 
     // Save the new approver document to the database
-    existingEmployee.isApprover = "true";
-
-    // console.log("Existing employee: ", existingEmployee);
+    approverDetails.isApprover = true;
     await newApprover.save();
-    await existingEmployee.save();
+    await approverDetails.save();
+
+    await axios.get('http://localhost:5000/sendMailApproverCreated', {
+      params: { requestingEmail: approverDetails.email }
+    });
+
     return res.status(201).json({ message: 'Approver created successfully' });
   } catch (error) {
     console.error('Error creating approver:', error);
@@ -418,7 +525,7 @@ exports.fetchCertificationDetailAdminDashboard = async (req, res) => {
 
     // Find the certification details based on the user ID
     const certification = await CertificationModel.findOne({ userId: user._id });
-    
+
     // Extract the driveLink from the certification
     const driveLink = certification ? certification.driveLink : null;
 
@@ -441,7 +548,7 @@ exports.fetchProjectDetailAdminDashboard = async (req, res) => {
 
     // Find the certification details based on the user ID
     const project = await ProjectModel.findOne({ userId: user._id });
-    
+
     // Extract the driveLink from the certification
     const client = project ? project.client : null;
 
@@ -464,7 +571,7 @@ exports.fetchSkillDetailAdminDashboard = async (req, res) => {
 
     // Find the certification details based on the user ID
     const skil = await SkillModel.findOne({ userId: user._id });
-    
+
     // Extract the driveLink from the certification
     const rateYourself = skil ? skil.rateYourself : null;
 

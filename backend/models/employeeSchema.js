@@ -7,7 +7,7 @@ const employeeSchema = new mongoose.Schema({
   role: { type: String, enum: ['admin', 'user'] },
   age: Number,
   phoneNumber: String,
-  designation: { type: String, enum: ['Software Engineer', 'Sr. Software Engineer', 'Technology Solution Enabler', 'Technology Solution Consultant', 'Technology Solution Architect', 'Project Manager', 'Functional Head', 'Deivery Head'] },
+  designation: { type: String, enum: ['Software Engineer', 'Sr. Software Engineer', 'Technology Solution Enabler', 'Technology Solution Consultant', 'Technology Solution Architect', 'Project Manager', 'Functional Head', 'Delivery Head'] },
   department: { type: String, enum: ['Delivery', 'Finance', 'Support', 'Quality', 'Technology', 'HR', 'IT', 'Talent Acquisition', 'Talent Management'] },
   isApprover: { type: Boolean, default: false }
 });

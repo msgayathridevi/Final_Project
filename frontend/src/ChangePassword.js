@@ -16,7 +16,7 @@ const ChangePassword = () => {
                 if (res.status === 200) {
                     alert('Password Changed');
                 }
-                console.log(res.data);
+                // console.log(res.data);
             }).catch(err => {
                 alert('Password not Changed');
                 console.log(err);

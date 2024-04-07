@@ -14,3 +14,5 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 - update forget password
 - https://evnxdhk38io.typeform.com/to/VaBH7lwk
 - formik for login and validation
+- good code refactoring done, proper MVC and in order
+- need to send proper messages
