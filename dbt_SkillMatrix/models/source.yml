@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: skillmatrix
     database: skillmatrix_sdb
-    schema: staging
+    schema: public
     tables:
       - name: approvers
       - name: certifications
