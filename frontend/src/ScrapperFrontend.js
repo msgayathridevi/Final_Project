@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import {Link} from 'react-router-dom';
 function ScrapperFrontend() {
   const [score, setScore] = useState(null);
 
@@ -11,18 +12,17 @@ function ScrapperFrontend() {
         const latestScore = data.data.latest_score;
         setScore(latestScore);
         // console.log(latestScore);
+        alert(`new score changed: ${latestScore}`);
       })
       .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  }, [score]);
 
   return (
     <div className="App">
-      <h1>Latest Score</h1>
-      {score !== null ? (
-        <p>Score: {score}</p>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <Link to="https://evnxdhk38io.typeform.com/to/VaBH7lwk" target="_blank">
+        <button>hello</button>
+        <p> {score}</p>
+      </Link>
     </div>
   );
 }

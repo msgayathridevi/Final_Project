@@ -10,9 +10,10 @@ import EditCertification from './EditCertification';
 import EditProject from './EditProject';
 import CreateEmployee from './CreateEmployee';
 import CreateApprover from './CreateApprover';
+import  Navigateto from './Navigate'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import ScrapperFrontend from  './ScrapperFrontend';
+import ScrapperFrontend from  './ScrapperFrontend';
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
         <Route path="/editCertification/:userId" element={<EditCertification />} />
         <Route path="/editProject/:userId" element={<EditProject />} />
         <Route path="/createapprover/" element={<CreateApprover />} />
+
+
+        <Route path="/something" element={<ScrapperFrontend />} />
       </Routes>
     </Router>
   );
