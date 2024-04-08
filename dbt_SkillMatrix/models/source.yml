@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: skillmatrix
+    database: skillmatrix_sdb
+    schema: staging
+    tables:
+      - name: approvers
+      - name: certifications
+      - name: employees
+      - name: projects
+      - name: skills
