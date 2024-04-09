@@ -5,8 +5,8 @@ sources:
     database: skillmatrix_sdb
     schema: public
     tables:
-      - name: approvers
-      - name: certifications
+      - name: aprovers
+      - name: certificates
       - name: employees
       - name: projects
       - name: skills

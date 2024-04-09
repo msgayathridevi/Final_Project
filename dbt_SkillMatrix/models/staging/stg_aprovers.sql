@@ -13,7 +13,7 @@ required_fields AS (
     
         *
 
-    FROM {{ source('skillmatrix', 'employees') }}
+    FROM {{ source('skillmatrix', 'aprovers') }}
 
 )
 

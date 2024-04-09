@@ -16,3 +16,5 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 - formik for login and validation
 - good code refactoring done, proper MVC and in order
 - need to send proper messages
+
+- copy dbt c drive yml files in the vsc
