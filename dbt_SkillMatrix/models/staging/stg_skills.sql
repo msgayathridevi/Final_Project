@@ -15,7 +15,7 @@ required_fields AS (
         USERID ,
         SKILLMODE ,
         SKILLS ,
-        CAST(RATEYOURSELF as INT) ,
+        CAST(RATEYOURSELF AS INT) AS RATEYOURSELF,
         DRIVELINK 
 
     FROM {{ source('skillmatrix', 'skills') }}
