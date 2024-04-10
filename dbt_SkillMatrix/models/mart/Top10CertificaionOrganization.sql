@@ -12,6 +12,7 @@ stg_employees AS (
     FROM 
         {{ ref('stg_employees') }} 
 ),
+
 stg_projects AS ( 
     SELECT 
         *
@@ -34,27 +35,26 @@ stg_certificates AS (
         {{ ref('stg_certificates') }} 
 ),
 
--- employees_certificates AS (
---     SELECT
---         ae.*,
---         c.USERID,
---         c.ORGANIZATION,
---         c.SKILLS
---     FROM
---         {{ ref('stg_certificates') }} c
---     JOIN 
---         approved_employees ae
---     ON 
---         c.USERID = ae.EMPLOYEE_ID
--- )
-
 employees_certificates AS (
     SELECT 
-        emp._ID, cer.USERID
+       
+        cer.organization
     FROM
         stg_employees emp
-        join  stg_certificates cer
-        on cer.USERID=emp._ID
+    JOIN  
+        stg_certificates cer
+    ON 
+        cer.USERID = emp._ID
 )
 
-SELECT * FROM employees_certificates
+SELECT 
+    organization,
+    COUNT(*) AS certificate_count
+FROM 
+    employees_certificates
+GROUP BY 
+    organization
+ORDER BY 
+    certificate_count DESC
+LIMIT 
+    10
